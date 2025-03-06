@@ -44,6 +44,8 @@ class SplashUI extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
+                        fontFamily: 'Lato',
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ],

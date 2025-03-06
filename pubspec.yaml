@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   firebase_auth: ^5.4.1
-  firebase_core : ^3.6.0
+  firebase_core: ^3.6.0
   cloud_firestore: ^5.6.5
   provider: ^6.0.0
 
@@ -49,5 +49,14 @@ flutter:
         - asset: assets/fonts/BigShouldersInline_36pt-Bold.ttf
           weight: 700
         - asset: assets/fonts/BigShouldersInline_18pt-Black.ttf
+          weight: 900
+
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Lato-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Lato-Black.ttf
           weight: 900
 
