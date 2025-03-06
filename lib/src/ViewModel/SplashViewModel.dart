@@ -12,8 +12,12 @@ class SplashViewModel extends ChangeNotifier {
     loading = true;
     notifyListeners();
 
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 5));
 
-    Navigator.pushNamed(context, RouteUtil.loginScreen);
+    // Check if the context is mounted
+    if (context.mounted) {
+      Navigator.pushReplacementNamed(context, RouteUtil.loginScreen);
+    }
+
   }
 }

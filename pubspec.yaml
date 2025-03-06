@@ -35,6 +35,12 @@ flutter:
 
   uses-material-design: true
 
+
+  assets:
+    - assets/ico/
+    - assets/fonts/
+    - assets/images/
+
   fonts:
     - family: BigShouldersInline
       fonts:
