@@ -84,6 +84,7 @@ class LoginUi extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   // Add your code here
+                  viewModel.LoginNow(context);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: ColorUtils.accentColor,
