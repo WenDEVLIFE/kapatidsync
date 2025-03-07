@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/config/Route.dart';
+import 'package:kapatidsync/src/ui/AttendanceLogsUI.dart';
+import 'package:kapatidsync/src/ui/DashboardUI.dart';
+import 'package:kapatidsync/src/ui/KidUI.dart';
 import '../config/ColorUtils.dart';
+import '../ui/MenuUI.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
   BottomNavigationWidget({super.key});
@@ -14,10 +18,10 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
-    Text('Home'),
-    Text('Person'),
-    Text('Settings'),
-    Text('Menu'),
+    const DashboardUI(),
+    const KidUI(),
+    const AttendanceLogsUI(),
+    const MenuUI(),
   ];
 
   void _onItemTapped(int index) {
