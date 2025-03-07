@@ -1,15 +1,86 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kapatidsync/src/config/Route.dart';
 import '../config/ColorUtils.dart';
 
-class BottomNavigationWidget extends StatelessWidget {
+class BottomNavigationWidget extends StatefulWidget {
   BottomNavigationWidget({super.key});
+
+  @override
+  _BottomNavigationWidgetState createState() => _BottomNavigationWidgetState();
+}
+
+class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
+  int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
     Text('Home'),
     Text('Person'),
     Text('Settings'),
+    Text('Menu'),
   ];
+
+  void _onItemTapped(int index) {
+    if (index == 3) {
+      // Handle logout action
+      print('Logout');
+      // You can add your logout logic here
+      showDialog(context: context, builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: ColorUtils.primaryColor,
+          title: const Text('Logout', style: TextStyle(
+            color: ColorUtils.secondaryColor,
+            fontSize: 20,
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.w700,
+          ),),
+          content: const Text('Are you sure you want to logout?',
+            style: TextStyle(
+              color: ColorUtils.secondaryColor,
+              fontSize: 16,
+              fontFamily: 'Lato',
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('No'
+              , style: TextStyle(
+                color: ColorUtils.secondaryColor,
+                fontSize: 16,
+                fontFamily: 'Lato',
+                fontWeight: FontWeight.w700,
+                  ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, RouteUtil.loginScreen);
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              child: const Text('Yes' , style: TextStyle(
+                color: ColorUtils.secondaryColor,
+                fontSize: 16,
+                fontFamily: 'Lato',
+                fontWeight: FontWeight.w700,
+              ),
+              ),
+            ),
+          ],
+        );
+      }
+      );
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +103,18 @@ class BottomNavigationWidget extends StatelessWidget {
             label: 'Attendance Logs',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.power),
-            label: 'Logout',
+            icon: Icon(CupertinoIcons.list_bullet),
+            label: 'Menu',
           ),
         ],
+        onTap: _onItemTapped,
       ),
       tabBuilder: (BuildContext context, int index) {
+        if (index == 3) {
+          return const Center(
+            child: Text('Logging out...'),
+          );
+        }
         return CupertinoTabView(
           builder: (BuildContext context) {
             return Center(
