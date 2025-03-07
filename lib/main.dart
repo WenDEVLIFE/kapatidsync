@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/ViewModel/LoginViewModel.dart';
 import 'package:kapatidsync/src/ViewModel/SplashViewModel.dart';
 import 'package:kapatidsync/src/config/Route.dart';
+import 'package:kapatidsync/src/services/FirebaseService.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await FirebaseServices.runFirebase();
 }
 
 class MyApp extends StatelessWidget {
