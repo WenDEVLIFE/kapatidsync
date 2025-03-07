@@ -26,7 +26,7 @@ class SplashUI extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      height: screenHeight * 0.5,
+                      height: screenHeight * 0.3,
                       width: screenWidth * 0.5,
                       decoration: const BoxDecoration(
                         image: DecorationImage(

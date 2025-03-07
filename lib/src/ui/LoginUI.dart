@@ -97,7 +97,7 @@ class LoginUi extends StatelessWidget {
                   style: TextStyle(
                     color: ColorUtils.secondaryColor,
                     fontSize: 20,
-                    fontFamily: 'BigShouldersInline',
+                    fontFamily: 'Lato',
                     fontWeight: FontWeight.w700,
                   ),
                 ),
