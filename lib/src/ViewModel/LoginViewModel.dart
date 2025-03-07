@@ -18,7 +18,7 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   void LoginNow(BuildContext context){
-    Navigator.pushNamed(context, RouteUtil.userPage);
+    Navigator.pushReplacementNamed(context, RouteUtil.userPage);
 
   }
 

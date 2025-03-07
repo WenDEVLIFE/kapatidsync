@@ -4,6 +4,7 @@ import 'package:kapatidsync/src/config/Route.dart';
 import 'package:kapatidsync/src/ui/AttendanceLogsUI.dart';
 import 'package:kapatidsync/src/ui/DashboardUI.dart';
 import 'package:kapatidsync/src/ui/KidUI.dart';
+import 'package:kapatidsync/src/widget/AlertDialogOptionWidget.dart';
 import '../config/ColorUtils.dart';
 import '../ui/MenuUI.dart';
 
@@ -30,53 +31,13 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
       print('Logout');
       // You can add your logout logic here
       showDialog(context: context, builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: ColorUtils.primaryColor,
-          title: const Text('Logout', style: TextStyle(
-            color: ColorUtils.secondaryColor,
-            fontSize: 20,
-            fontFamily: 'Lato',
-            fontWeight: FontWeight.w700,
-          ),),
-          content: const Text('Are you sure you want to logout?',
-            style: TextStyle(
-              color: ColorUtils.secondaryColor,
-              fontSize: 16,
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('No'
-              , style: TextStyle(
-                color: ColorUtils.secondaryColor,
-                fontSize: 16,
-                fontFamily: 'Lato',
-                fontWeight: FontWeight.w700,
-                  ),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, RouteUtil.loginScreen);
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
-              child: const Text('Yes' , style: TextStyle(
-                color: ColorUtils.secondaryColor,
-                fontSize: 16,
-                fontFamily: 'Lato',
-                fontWeight: FontWeight.w700,
-              ),
-              ),
-            ),
-          ],
-        );
+        return AlertDialogOptionWidget(
+          title: 'Logout',
+          content: 'Are you sure you want to logout?',
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, RouteUtil.loginScreen);
+          },
+        ).build(context);
       }
       );
     } else {
