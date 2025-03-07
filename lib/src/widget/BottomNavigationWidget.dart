@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../config/ColorUtils.dart';
 
 class BottomNavigationWidget extends StatelessWidget {
@@ -23,12 +24,16 @@ class BottomNavigationWidget extends StatelessWidget {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.search),
-            label: 'Person',
+            icon: Icon(Icons.document_scanner),
+            label: 'Attendance',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.settings),
-            label: 'Settings',
+            icon: Icon(CupertinoIcons.doc_plaintext),
+            label: 'Attendance Logs',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.power),
+            label: 'Logout',
           ),
         ],
       ),
