@@ -25,7 +25,7 @@ class BottomNavigationWidget extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.document_scanner),
-            label: 'Attendance',
+            label: 'Kids',
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.doc_plaintext),
