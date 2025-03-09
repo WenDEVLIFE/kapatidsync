@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 class UserViewModel extends ChangeNotifier {
 
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
 

@@ -51,6 +51,27 @@ class AddUserDialog extends StatelessWidget {
             Container(
               width: screenWidth * 0.8,
               child: TextField(
+                controller: viewModel.nameController,
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
+                  hintText: 'Name',
+                  hintStyle: TextStyle(color: Colors.white ,
+                      fontFamily: 'Lato' ,
+                      fontSize: 20 ,
+                      fontWeight: FontWeight.w400),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.02),
+            Container(
+              width: screenWidth * 0.8,
+              child: TextField(
                 controller: viewModel.passwordController,
                 style: const TextStyle(color: Colors.white),
                 obscureText: viewModel.isObscure1,

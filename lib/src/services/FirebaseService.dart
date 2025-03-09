@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 
 class FirebaseServices {
+  static const String adminEmail ='SystemAdmin@gmail.com';
+  static const String adminPassword = '@WenDEVLIFE123';
   static Future<void> runFirebase() async {
     // Add your code here
     await Firebase.initializeApp(
