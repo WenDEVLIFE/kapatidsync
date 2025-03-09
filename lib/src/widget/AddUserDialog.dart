@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/ViewModel/UserViewModel.dart';
+import 'package:kapatidsync/src/config/ColorUtils.dart';
 import 'package:provider/provider.dart';
 
 class AddUserDialog extends StatelessWidget {
@@ -68,15 +69,126 @@ class AddUserDialog extends StatelessWidget {
                     icon: Icon(viewModel.isObscure1 ? Icons.visibility : Icons.visibility_off),
                     color: Colors.white,
                     onPressed: () {
-                      viewModel.toggleObscureText();
+                      viewModel.toggleObscureText1();
                     },
                   ),
                 ),
               ),
             ),
+            SizedBox(height: screenHeight * 0.02),
+            Container(
+              width: screenWidth * 0.8,
+              child: TextField(
+                controller: viewModel.passwordController,
+                style: const TextStyle(color: Colors.white),
+                obscureText: viewModel.isObscure2,
+                decoration: InputDecoration(
+                  hintText: 'Confirm Password' ,
+                  hintStyle: const TextStyle(color: Colors.white ,
+                      fontFamily: 'Lato' ,
+                      fontSize: 20 ,
+                      fontWeight: FontWeight.w400),
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(viewModel.isObscure2 ? Icons.visibility : Icons.visibility_off),
+                    color: Colors.white,
+                    onPressed: () {
+                      viewModel.toggleObscureText2();
+                    },
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.02),
+            Container(
+              width: screenWidth * 0.9,
+              height: screenHeight * 0.08,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+              ),
+              padding: const EdgeInsets.symmetric(horizontal:  10, vertical:  5),
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  canvasColor: ColorUtils.secondaryColor
+                ),
+                child: DropdownButton<String>(
+                  value: viewModel.selectedRole,
+                  items: viewModel.role.map<DropdownMenuItem<String>>((String value){
+                    return DropdownMenuItem(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: const TextStyle(color: Colors.white ,
+                            fontFamily: 'Lato' ,
+                            fontSize: 20 ,
+                            fontWeight: FontWeight.w400
+                      ),
+                      ),
+                    );
+                  }).toList(), onChanged: (String? value) {
+                    viewModel.setRole(value);
+                },
+                  dropdownColor: ColorUtils.secondaryColor,
+                  iconEnabledColor: ColorUtils.accentColor,
+                  style:  const TextStyle(color: Colors.black ,
+                      fontFamily: 'Lato' ,
+                      fontSize: 20 ,
+                      fontWeight: FontWeight.w400
+                  ),
+                  selectedItemBuilder: (BuildContext context){
+                    return viewModel.role.map<Widget>((String item){
+                      return Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(item,
+                          style: const TextStyle(color: Colors.black ,
+                              fontFamily: 'Lato' ,
+                              fontSize: 20 ,
+                              fontWeight: FontWeight.w400
+                          ),
+                        ),
+                      );
+                    }).toList();
+                  },
+                  isExpanded: true,
+                  alignment: Alignment.bottomLeft,
+
+              ),
+              ),
+            ),
           ],
         ),
       ),
+      actions: [
+        TextButton(
+          onPressed: (){
+
+          },
+          child: Text("Add User",
+          style: const TextStyle(color: Colors.white ,
+              fontFamily: 'Lato' ,
+              fontSize: 20 ,
+              fontWeight: FontWeight.w400
+          ),
+          ),
+        ),
+        TextButton(
+          onPressed: (){
+
+          },
+          child: Text("Cancel",
+            style: const TextStyle(color: Colors.white ,
+                fontFamily: 'Lato' ,
+                fontSize: 20 ,
+                fontWeight: FontWeight.w400
+            ),
+          ),
+        ),
+      ],
 
 
     );
