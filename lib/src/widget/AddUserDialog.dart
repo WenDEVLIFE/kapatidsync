@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/ViewModel/UserViewModel.dart';
 import 'package:kapatidsync/src/config/ColorUtils.dart';
 import 'package:provider/provider.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class AddUserDialog extends StatelessWidget {
   @override
@@ -188,8 +189,20 @@ class AddUserDialog extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          onPressed: (){
+          onPressed: () async {
+            ProgressDialog pd = ProgressDialog(context: context);
+            pd.show(max: 100, msg: 'Adding User');
 
+           try{
+             await viewModel.addUser();
+             if (context.mounted) {
+               Navigator.pop(context);
+             }
+           } catch (e){
+             print(e);
+           }finally{
+             pd.close();
+           }
           },
           child: Text("Add User",
           style: const TextStyle(color: Colors.white ,
@@ -201,7 +214,7 @@ class AddUserDialog extends StatelessWidget {
         ),
         TextButton(
           onPressed: (){
-
+           Navigator.pop(context);
           },
           child: Text("Cancel",
             style: const TextStyle(color: Colors.white ,
