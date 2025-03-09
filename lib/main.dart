@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/ViewModel/LoginViewModel.dart';
 import 'package:kapatidsync/src/ViewModel/SplashViewModel.dart';
+import 'package:kapatidsync/src/ViewModel/UserViewModel.dart';
 import 'package:kapatidsync/src/config/Route.dart';
 import 'package:kapatidsync/src/services/FirebaseService.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => SplashViewModel()),
         ChangeNotifierProvider(create: (context) => LoginViewModel()),
+        ChangeNotifierProvider(create: (context) => UserViewModel()),
       ],
       child: MaterialApp(
         key: GlobalKey(),
