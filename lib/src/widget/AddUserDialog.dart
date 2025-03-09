@@ -7,13 +7,14 @@ import 'package:provider/provider.dart';
 class AddUserDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final UserViewModel viewModel = Provider.of<UserViewModel>(context, listen: false);
+    final UserViewModel viewModel = Provider.of<UserViewModel>(context, listen: true);
 
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
     // TODO: implement build
     return AlertDialog(
+      backgroundColor: ColorUtils.primaryColor,
       title: const Text("Add User"
       ,style: TextStyle(
         color: Colors.white,
@@ -29,7 +30,7 @@ class AddUserDialog extends StatelessWidget {
             Container(
               width: screenWidth * 0.8,
               child: TextField(
-               // controller: viewModel.emailController,
+               controller: viewModel.emailController,
                 style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
                   hintText: 'Email',
@@ -130,12 +131,13 @@ class AddUserDialog extends StatelessWidget {
                       ),
                       ),
                     );
-                  }).toList(), onChanged: (String? value) {
+                  }).toList(),
+                  onChanged: (String? value) {
                     viewModel.setRole(value);
                 },
-                  dropdownColor: ColorUtils.secondaryColor,
+                  dropdownColor: ColorUtils.primaryColor,
                   iconEnabledColor: ColorUtils.accentColor,
-                  style:  const TextStyle(color: Colors.black ,
+                  style:  const TextStyle(color: Colors.white ,
                       fontFamily: 'Lato' ,
                       fontSize: 20 ,
                       fontWeight: FontWeight.w400
@@ -145,7 +147,7 @@ class AddUserDialog extends StatelessWidget {
                       return Align(
                         alignment: Alignment.centerLeft,
                         child: Text(item,
-                          style: const TextStyle(color: Colors.black ,
+                          style: const TextStyle(color: Colors.white ,
                               fontFamily: 'Lato' ,
                               fontSize: 20 ,
                               fontWeight: FontWeight.w400

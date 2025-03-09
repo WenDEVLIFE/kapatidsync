@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kapatidsync/src/widget/AddUserDialog.dart';
 
 import '../config/ColorUtils.dart';
 
@@ -24,6 +25,9 @@ class UserUI extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: ColorUtils.accentColor,
           onPressed : (){
+          showDialog(context: context, builder: (BuildContext context){
+            return AddUserDialog();
+          });
 
           },
           child: const Icon(Icons.person_add, color: ColorUtils.secondaryColor,),

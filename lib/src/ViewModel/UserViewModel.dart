@@ -28,6 +28,14 @@ class UserViewModel extends ChangeNotifier {
 
   void setRole(String? value) {
     selectedRole = value!;
+    notifyListeners();
+  }
+
+  void clearData(){
+    emailController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
+    selectedRole = 'Admin';
   }
 
 }
