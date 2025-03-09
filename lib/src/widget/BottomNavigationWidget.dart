@@ -7,6 +7,7 @@ import 'package:kapatidsync/src/ui/KidUI.dart';
 import 'package:kapatidsync/src/widget/AlertDialogOptionWidget.dart';
 import '../config/ColorUtils.dart';
 import '../ui/MenuUI.dart';
+import '../ui/UserUI.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
   BottomNavigationWidget({super.key});
@@ -21,6 +22,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   final List<Widget> _widgetOptions = <Widget>[
     const DashboardUI(),
     const KidUI(),
+    UserUI(),
     const AttendanceLogsUI(),
     const MenuUI(),
   ];
@@ -64,6 +66,10 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
             label: 'Kids',
           ),
           BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.person_2_fill),
+            label: 'Users',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.doc_plaintext),
             label: 'Attendance Logs',
           ),
@@ -75,7 +81,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
         onTap: _onItemTapped,
       ),
       tabBuilder: (BuildContext context, int index) {
-        if (index == 3) {
+        if (index == 4) {
           return const Center(
             child: Text('Logging out...'),
           );
