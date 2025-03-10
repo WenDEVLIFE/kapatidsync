@@ -1,19 +1,32 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kapatidsync/src/config/ImageUtils.dart';
 import 'package:provider/provider.dart';
 
 import '../ViewModel/MenuViewModel.dart';
 import '../config/ColorUtils.dart';
 import '../widget/MenuListWidget.dart';
 
-class MenuUI extends StatelessWidget {
+class MenuUI extends StatefulWidget {
   const MenuUI({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  MenuUIState createState() => MenuUIState();
 
-    final MenuViewModel viewModel = Provider.of<MenuViewModel>(context, listen: true);
+}
+
+class MenuUIState extends State<MenuUI> {
+  late MenuViewModel viewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<MenuViewModel>(context, listen: false).getUserInfo();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final MenuViewModel viewModel = Provider.of<MenuViewModel>(context);
 
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
@@ -54,7 +67,7 @@ class MenuUI extends StatelessWidget {
                               backgroundColor: ColorUtils.primaryColor,
                               child: CircleAvatar(
                                 radius: screenHeight * 0.068,
-                                backgroundImage: const AssetImage(ImageUtils.logoPath),
+                                backgroundImage: AssetImage(viewModel.profilepath),
                               ),
                             ),
                           );
@@ -83,6 +96,20 @@ class MenuUI extends StatelessWidget {
                             builder: (context, viewModel, child) {
                               return Text(
                                 viewModel.email,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'Lato',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(height: screenHeight * 0.01),
+                          Consumer<MenuViewModel>(
+                            builder: (context, viewModel, child) {
+                              return Text(
+                                viewModel.role,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
