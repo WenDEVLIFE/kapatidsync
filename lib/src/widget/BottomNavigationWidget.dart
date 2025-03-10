@@ -31,17 +31,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     if (index == 3) {
       // Handle logout action
       print('Logout');
-      // You can add your logout logic here
-      showDialog(context: context, builder: (BuildContext context) {
-        return AlertDialogOptionWidget(
-          title: 'Logout',
-          content: 'Are you sure you want to logout?',
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, RouteUtil.loginScreen);
-          },
-        ).build(context);
-      }
-      );
+
     } else {
       setState(() {
         _selectedIndex = index;

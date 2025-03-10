@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../ViewModel/MenuViewModel.dart';
 import '../config/ColorUtils.dart';
+import '../widget/MenuListWidget.dart';
 
 class MenuUI extends StatelessWidget {
   const MenuUI({super.key});
@@ -88,7 +89,7 @@ class MenuUI extends StatelessWidget {
             ),
             SizedBox.fromSize(size: Size.fromHeight(screenHeight * 0.02)),
             Expanded(
-            //  child: MenuListWidget(),
+            child: MenuListWidget(),
             ),
           ],
         ),
