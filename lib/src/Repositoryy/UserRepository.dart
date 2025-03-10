@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kapatidsync/src/model/UserModel.dart';
 
 abstract class UserRepository {
  Future<void> addUser(Map<String, dynamic> userdata);
+ Stream<List<UserModel>> getUsers();
 }
 
 class UserRepositoryImpl implements UserRepository {
@@ -29,6 +31,12 @@ class UserRepositoryImpl implements UserRepository {
       'Role': role,
     });
 
+  }
+
+  // Load the user from the firebase
+  @override
+  Stream<List<UserModel>> getUsers() {
+   return firebaseFirestore.collection('users').snapshots().map((snapshot) => snapshot.docs.map((doc) => UserModel.fromDocument(doc)).toList());
   }
 
 }
