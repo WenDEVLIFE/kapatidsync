@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/Repositoryy/UserRepository.dart';
 import 'package:kapatidsync/src/config/CheckDataUtils.dart';
 import 'package:kapatidsync/src/widget/FlutterToastWidget.dart';
+
+import '../model/UserModel.dart';
 
 class UserViewModel extends ChangeNotifier {
 
@@ -10,6 +13,7 @@ class UserViewModel extends ChangeNotifier {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
 
   final CheckDataUtils checkDataUtils = CheckDataUtils();
   final UserRepository userRepository = UserRepositoryImpl();
@@ -20,25 +24,48 @@ class UserViewModel extends ChangeNotifier {
   bool get isObscure1 => obscureText1;
   bool get isObscure2 => obscureText2;
 
+  List<UserModel> users = [];
+  List<UserModel> filterUsers = [];
+
+  // Get users
+  List<UserModel> get getUser => filterUsers;
+
+  Stream<List<UserModel>> get userStream => userRepository.getUsers();
+
   var role = ['Admin', 'Chruch Officer'];
   var selectedRole ='Admin';
 
+  // intialize
+  UserViewModel  () {
+    _listenToUserStream();
+  }
+
+  // view password & hide password
   void toggleObscureText1() {
     obscureText1 = !obscureText1;
     notifyListeners();
   }
 
+  // view password & hide password
   void toggleObscureText2() {
     obscureText2 = !obscureText2;
     notifyListeners();
   }
 
+  // Set users
+  void setUsers(List<UserModel> userList) {
+    users = userList;
+    filterUsers = userList;
+    notifyListeners();
+  }
 
+  // Set role
   void setRole(String? value) {
     selectedRole = value!;
     notifyListeners();
   }
 
+  // clear data
   void clearData(){
     emailController.clear();
     nameController.clear();
@@ -47,6 +74,7 @@ class UserViewModel extends ChangeNotifier {
     selectedRole = 'Admin';
   }
 
+  // Add user listener
   Future<void> addUser() async {
 
     bool checkEmail = await checkDataUtils.validateEmail(emailController.text);
@@ -114,6 +142,35 @@ class UserViewModel extends ChangeNotifier {
       await userRepository.addUser(userdata);
       clearData();
     }
+
+  }
+
+  // get user
+  void _listenToUserStream() {
+    userStream.listen((userList) {
+      setUsers(userList);
+      notifyListeners();
+    });
+  }
+
+
+  // Filtered Search
+  void filterUser(String query) {
+    if (query.isNotEmpty) {
+      filterUsers = users
+          .where((user) =>
+      user.name.toLowerCase().contains(query.toLowerCase()) ||
+          user.email.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    } else {
+      filterUsers = users;
+    }
+    notifyListeners();
+  }
+
+
+  // Delete user
+  Future <void> deleteUser(String uid) async {
 
   }
 
