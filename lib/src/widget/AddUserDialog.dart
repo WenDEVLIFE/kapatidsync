@@ -102,7 +102,7 @@ class AddUserDialog extends StatelessWidget {
             Container(
               width: screenWidth * 0.8,
               child: TextField(
-                controller: viewModel.passwordController,
+                controller: viewModel.confirmPasswordController,
                 style: const TextStyle(color: Colors.white),
                 obscureText: viewModel.isObscure2,
                 decoration: InputDecoration(

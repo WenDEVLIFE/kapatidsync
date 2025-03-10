@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kapatidsync/src/Repositoryy/UserRepository.dart';
 import 'package:kapatidsync/src/config/CheckDataUtils.dart';
 import 'package:kapatidsync/src/widget/FlutterToastWidget.dart';
 
@@ -11,6 +12,7 @@ class UserViewModel extends ChangeNotifier {
   final TextEditingController confirmPasswordController = TextEditingController();
 
   final CheckDataUtils checkDataUtils = CheckDataUtils();
+  final UserRepository userRepository = UserRepositoryImpl();
 
   bool obscureText1 = true;
   bool obscureText2 = true;
@@ -39,6 +41,7 @@ class UserViewModel extends ChangeNotifier {
 
   void clearData(){
     emailController.clear();
+    nameController.clear();
     passwordController.clear();
     confirmPasswordController.clear();
     selectedRole = 'Admin';
@@ -101,7 +104,15 @@ class UserViewModel extends ChangeNotifier {
 
     else{
 
+      var userdata = {
+        'email': emailController.text,
+        'name': nameController.text,
+        'role': selectedRole,
+        'password': passwordController.text,
+      };
 
+      await userRepository.addUser(userdata);
+      clearData();
     }
 
   }
