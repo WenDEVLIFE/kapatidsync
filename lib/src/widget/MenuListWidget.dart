@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/widget/AlertDialogOptionWidget.dart';
@@ -16,52 +15,51 @@ class MenuListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Flexible(
-          child: ListView.builder(
-            itemCount: menuItems.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: Icon(menuItems[index].icon, color: Colors.black, size: 22,),
-                title: Text(menuItems[index].title,
-                  style: const TextStyle(fontSize: 18,
-                    fontFamily: 'SmoochSans',
-                    fontWeight: FontWeight.w600,
+    return Material(
+      child: Column(
+        children: [
+          Flexible(
+            child: ListView.builder(
+              itemCount: menuItems.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: Icon(menuItems[index].icon, color: Colors.black, size: 22,),
+                  title: Text(menuItems[index].title,
+                    style: const TextStyle(fontSize: 18,
+                      fontFamily: 'SmoochSans',
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                onTap: () {
-                  // Handle menu item tap
-               if (index == 0) {
-                    // Privacy Policy
+                  onTap: () {
+                    // Handle menu item tap
+                    if (index == 0) {
+                      // Privacy Policy
 
-                  } else if (index == 1) {
-                    // About Us
+                    } else if (index == 1) {
+                      // About Us
 
-                  }
-               else if (index == 2) {
-                 // About Us
+                    } else if (index == 2) {
+                      // About Us
 
-               }
-               else if (index == 3) {
-                    // Logout
-                    showDialog(context: context, builder: (BuildContext context) {
-                      return AlertDialogOptionWidget(
-                        title: 'Logout',
-                        content: 'Are you sure you want to logout?',
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(context, RouteUtil.loginScreen);
-                        },
-                      ).build(context);
+                    } else if (index == 3) {
+                      // Logout
+                      showDialog(context: context, builder: (BuildContext context) {
+                        return AlertDialogOptionWidget(
+                          title: 'Logout',
+                          content: 'Are you sure you want to logout?',
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, RouteUtil.loginScreen);
+                          },
+                        ).build(context);
+                      });
                     }
-                    );
-                  }
-                },
-              );
-            },
+                  },
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

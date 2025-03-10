@@ -71,11 +71,6 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
         onTap: _onItemTapped,
       ),
       tabBuilder: (BuildContext context, int index) {
-        if (index == 4) {
-          return const Center(
-            child: Text('Logging out...'),
-          );
-        }
         return CupertinoTabView(
           builder: (BuildContext context) {
             return Center(

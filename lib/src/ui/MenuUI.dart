@@ -12,13 +12,26 @@ class MenuUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<MenuViewModel>(context, listen: true);
+
+    final MenuViewModel viewModel = Provider.of<MenuViewModel>(context, listen: true);
 
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
-    return CupertinoPageScaffold(
-      child: Center(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Menu',
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: 'SmoochSans',
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+          ),
+        ),
+        backgroundColor: ColorUtils.primaryColor,
+      ),
+      body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -36,15 +49,14 @@ class MenuUI extends StatelessWidget {
                       Consumer<MenuViewModel>(
                         builder: (context, viewModel, child) {
                           return GestureDetector(
-                            child:CircleAvatar(
+                            child: CircleAvatar(
                               radius: screenHeight * 0.07,
                               backgroundColor: ColorUtils.primaryColor,
                               child: CircleAvatar(
                                 radius: screenHeight * 0.068,
-                                backgroundImage: Image.asset(ImageUtils.logoPath).image,
+                                backgroundImage: const AssetImage(ImageUtils.logoPath),
                               ),
                             ),
-
                           );
                         },
                       ),
@@ -60,7 +72,7 @@ class MenuUI extends StatelessWidget {
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
-                                  fontFamily: 'SmoochSans',
+                                  fontFamily: 'Lato',
                                   fontWeight: FontWeight.w600,
                                 ),
                               );
@@ -74,7 +86,7 @@ class MenuUI extends StatelessWidget {
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
-                                  fontFamily: 'SmoochSans',
+                                  fontFamily: 'Lato',
                                   fontWeight: FontWeight.w500,
                                 ),
                               );
@@ -89,7 +101,7 @@ class MenuUI extends StatelessWidget {
             ),
             SizedBox.fromSize(size: Size.fromHeight(screenHeight * 0.02)),
             Expanded(
-            child: MenuListWidget(),
+              child: MenuListWidget(),
             ),
           ],
         ),
