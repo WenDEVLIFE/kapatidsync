@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../ViewModel/UserViewModel.dart';
 import '../config/ColorUtils.dart';
 import '../model/UserModel.dart';
+import '../widget/AlertDialogOptionWidget.dart';
 
 class UserUI extends StatelessWidget {
   @override
@@ -115,7 +116,16 @@ class UserUI extends StatelessWidget {
                             IconButton(
                               icon: const Icon(Icons.delete, color: Colors.white),
                               onPressed: () {
-                                //viewModel.navigateToAddAdmin(context);
+                                showDialog(context: context, builder: (BuildContext context) {
+                                  return AlertDialogOptionWidget(
+                                    title: 'Delete User',
+                                    content: 'Are you sure you want to delete this user?',
+                                    onPressed: () {
+                                      viewModel.deleteUser(user.id, context);
+                                      Navigator.of(context).pop();
+                                    },
+                                  ).build(context);
+                                });
                               },
                             ),
                           ],

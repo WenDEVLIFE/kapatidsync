@@ -3,7 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/Repositoryy/UserRepository.dart';
 import 'package:kapatidsync/src/config/CheckDataUtils.dart';
+import 'package:kapatidsync/src/config/ColorUtils.dart';
+import 'package:kapatidsync/src/config/SessionUtils.dart';
 import 'package:kapatidsync/src/widget/FlutterToastWidget.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import '../model/UserModel.dart';
 
@@ -170,8 +173,28 @@ class UserViewModel extends ChangeNotifier {
 
 
   // Delete user
-  Future <void> deleteUser(String uid) async {
+  Future <void> deleteUser(String uid, BuildContext context) async {
+    SessionUtils sessionUtils = SessionUtils();
 
+    var user = await sessionUtils.getUserInfo();
+    var userID = user?['uid'];
+    ProgressDialog pd = ProgressDialog(context: context);
+    pd.show(max: 100, msg: 'Deleting User' , surfaceTintColor: ColorUtils.primaryColor, barrierColor: Colors.black.withOpacity(0.5));
+
+    try {
+       if (userID == uid){
+         FlutterToastWidget().showMessage(Colors.red, 'You cannot delete your own account');
+       }
+       else{
+         await userRepository.deleteUser(uid);
+         FlutterToastWidget().showMessage(Colors.green, 'User deleted successfully');
+       }
+    } catch (e) {
+      print(e);
+    }
+    finally {
+      pd.close();
+    }
   }
 
 }

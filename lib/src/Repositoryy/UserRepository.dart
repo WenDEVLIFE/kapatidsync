@@ -4,6 +4,7 @@ import 'package:kapatidsync/src/model/UserModel.dart';
 
 abstract class UserRepository {
  Future<void> addUser(Map<String, dynamic> userdata);
+ Future<void> deleteUser(String uid);
  Stream<List<UserModel>> getUsers();
 }
 
@@ -37,6 +38,12 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Stream<List<UserModel>> getUsers() {
    return firebaseFirestore.collection('users').snapshots().map((snapshot) => snapshot.docs.map((doc) => UserModel.fromDocument(doc)).toList());
+  }
+
+  // Delete the user from the database
+  @override
+  Future<void> deleteUser(String uid) {
+    return firebaseFirestore.collection('users').doc(uid).delete();
   }
 
 }
