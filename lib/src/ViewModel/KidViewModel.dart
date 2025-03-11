@@ -13,4 +13,8 @@ class KidViewModel extends ChangeNotifier {
   void filterUser(String query) {
 
   }
+
+  // TODO : implement add kid to the database
+
+
 }

@@ -52,7 +52,7 @@ class AddKidDialog extends StatelessWidget {
             Container(
               width: screenWidth * 0.8,
               child: TextField(
-                controller: viewModel.nameController,
+                controller: viewModel.ageController,
                 keyboardType: TextInputType.number,
                 style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
@@ -117,6 +117,18 @@ class AddKidDialog extends StatelessWidget {
               width: screenWidth * 0.8,
               child: TextField(
                 controller: viewModel.birthdateController,
+                readOnly: true,
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime(2100),
+                  );
+                  if (pickedDate != null) {
+                    viewModel.birthdateController.text = "${pickedDate.toLocal()}".split(' ')[0];
+                  }
+                },
                 style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
                   hintText: 'BirthDate',
