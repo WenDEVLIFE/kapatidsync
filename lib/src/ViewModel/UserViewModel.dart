@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/Repositoryy/UserRepository.dart';
@@ -156,6 +155,7 @@ class UserViewModel extends ChangeNotifier {
     });
   }
 
+      // TODO: Add user to firebase
 
   // Filtered Search
   void filterUser(String query) {

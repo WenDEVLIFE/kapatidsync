@@ -13,7 +13,6 @@ class AddUserDialog extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
-    // TODO: implement build
     return AlertDialog(
       backgroundColor: ColorUtils.primaryColor,
       title: const Text("Add User"

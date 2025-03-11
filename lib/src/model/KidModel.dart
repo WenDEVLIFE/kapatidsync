@@ -1,0 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class KidModel{
+  final String id;
+  final String fullname;
+  final int age;
+  final String gender;
+  final String address;
+  final String phoneNumber;
+  final String parentName;
+
+  KidModel({
+    required this.id,
+    required this.fullname,
+    required this.age,
+    required this.gender,
+    required this.address,
+    required this.phoneNumber,
+    required this.parentName,
+  });
+
+  factory KidModel.fromDocumentSnapShot(DocumentSnapshot doc){
+    return KidModel(
+      id: doc.id,
+      fullname: doc['FullName'],
+      age: doc['Age'],
+        gender: doc['Gender'],
+        address: doc['Address'],
+        phoneNumber: doc['PhoneNumber'],
+        parentName: doc['ParentName'],
+
+    );
+  }
+}

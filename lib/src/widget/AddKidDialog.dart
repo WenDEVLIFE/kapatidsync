@@ -167,6 +167,85 @@ class AddKidDialog extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(height: screenHeight * 0.02),
+            Container(
+              width: screenWidth * 0.9,
+              height: screenHeight * 0.08,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+              ),
+              padding: const EdgeInsets.symmetric(horizontal:  10, vertical:  5),
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                    canvasColor: ColorUtils.secondaryColor
+                ),
+                child: DropdownButton<String>(
+                  value: viewModel.selectedGender,
+                  items: viewModel.genderList.map<DropdownMenuItem<String>>((String value){
+                    return DropdownMenuItem(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: const TextStyle(color: Colors.white ,
+                            fontFamily: 'Lato' ,
+                            fontSize: 20 ,
+                            fontWeight: FontWeight.w400
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? value) {
+                    viewModel.setGender(value);
+                  },
+                  dropdownColor: ColorUtils.primaryColor,
+                  iconEnabledColor: ColorUtils.accentColor,
+                  style:  const TextStyle(color: Colors.white ,
+                      fontFamily: 'Lato' ,
+                      fontSize: 20 ,
+                      fontWeight: FontWeight.w400
+                  ),
+                  selectedItemBuilder: (BuildContext context){
+                    return viewModel.genderList.map<Widget>((String item){
+                      return Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(item,
+                          style: const TextStyle(color: Colors.white ,
+                              fontFamily: 'Lato' ,
+                              fontSize: 20 ,
+                              fontWeight: FontWeight.w400
+                          ),
+                        ),
+                      );
+                    }).toList();
+                  },
+                  isExpanded: true,
+                  alignment: Alignment.bottomLeft,
+
+                ),
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.02),
+            Container(
+              width: screenWidth * 0.8,
+              child: TextField(
+                controller: viewModel.parentNameController,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
+                  hintText: 'Parent Name',
+                  hintStyle: TextStyle(color: Colors.white ,
+                      fontFamily: 'Lato' ,
+                      fontSize: 20 ,
+                      fontWeight: FontWeight.w400),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -186,11 +265,9 @@ class AddKidDialog extends StatelessWidget {
             }finally{
               pd.close();
             }
-
-
             */
           },
-          child: Text("Add User",
+          child: Text("Add Kid",
             style: const TextStyle(color: Colors.white ,
                 fontFamily: 'Lato' ,
                 fontSize: 20 ,

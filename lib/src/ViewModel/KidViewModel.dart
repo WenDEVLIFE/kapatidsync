@@ -9,12 +9,22 @@ class KidViewModel extends ChangeNotifier {
   final TextEditingController contactController = TextEditingController();
   final TextEditingController birthdateController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
+  final TextEditingController parentNameController = TextEditingController();
+
+  var genderList = ['Male', 'Female'];
+  var selectedGender ='Male';
 
   void filterUser(String query) {
 
   }
 
+  void setGender(String? value) {
+    selectedGender = value!;
+    notifyListeners();
+  }
+
   // TODO : implement add kid to the database
+
 
 
 }
