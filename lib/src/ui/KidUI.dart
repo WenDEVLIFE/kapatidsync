@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/ViewModel/KidViewModel.dart';
+import 'package:kapatidsync/src/widget/AddKidDialog.dart';
 import 'package:provider/provider.dart';
 
 import '../config/ColorUtils.dart';
@@ -66,6 +67,17 @@ class KidUI extends StatelessWidget {
           }),
 
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: ColorUtils.accentColor,
+        onPressed : (){
+
+          showDialog(context: context, builder: (BuildContext context){
+            return AddKidDialog();
+          });
+
+        },
+        child: const Icon(Icons.add, color: ColorUtils.secondaryColor,),
       ),
     );
   }
