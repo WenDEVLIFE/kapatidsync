@@ -229,7 +229,6 @@ class AddKidDialog extends StatelessWidget {
               width: screenWidth * 0.8,
               child: TextField(
                 controller: viewModel.parentNameController,
-                keyboardType: TextInputType.number,
                 style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
                   hintText: 'Parent Name',
@@ -252,23 +251,10 @@ class AddKidDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () async {
-           /* ProgressDialog pd = ProgressDialog(context: context);
-            pd.show(max: 100, msg: 'Adding User');
-
-            try{
-              await viewModel.addUser();
-              if (context.mounted) {
-                Navigator.pop(context);
-              }
-            } catch (e){
-              print(e);
-            }finally{
-              pd.close();
-            }
-            */
+           await viewModel.addKidEvent(context);
           },
-          child: Text("Add Kid",
-            style: const TextStyle(color: Colors.white ,
+          child: const Text("Add Kid",
+            style: TextStyle(color: Colors.white ,
                 fontFamily: 'Lato' ,
                 fontSize: 20 ,
                 fontWeight: FontWeight.w400
@@ -279,8 +265,8 @@ class AddKidDialog extends StatelessWidget {
           onPressed: (){
             Navigator.pop(context);
           },
-          child: Text("Cancel",
-            style: const TextStyle(color: Colors.white ,
+          child: const Text("Cancel",
+            style: TextStyle(color: Colors.white ,
                 fontFamily: 'Lato' ,
                 fontSize: 20 ,
                 fontWeight: FontWeight.w400
