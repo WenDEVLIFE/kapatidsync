@@ -23,11 +23,21 @@ class KidViewModel extends ChangeNotifier {
   List<KidModel> kids = [];
   List<KidModel> filteredKids = [];
 
+  List<KidModel> get getKid => filteredKids;
+
   Stream<List<KidModel>> get kidsStream => kidRepository.getKids();
 
+  KidViewModel() {
+    _listenToUserStream();
+  }
 
   void filterUser(String query) {
-
+    if (query.isNotEmpty) {
+      filteredKids = kids.where((kid) => kid.fullname.toLowerCase().contains(query.toLowerCase())).toList();
+    } else {
+      filteredKids = kids;
+    }
+    notifyListeners();
   }
 
   void setGender(String? value) {
@@ -35,12 +45,11 @@ class KidViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-
-  Future<void> addKidEvent(BuildContext context) async{
+  Future<void> addKidEvent(BuildContext context) async {
     ProgressDialog pd = ProgressDialog(context: context);
     pd.show(max: 100, msg: 'Adding Kid...');
-    try{
-      if (nameController.text.isNotEmpty && ageController.text.isNotEmpty && purokController.text.isNotEmpty && contactController.text.isNotEmpty && birthdateController.text.isNotEmpty && addressController.text.isNotEmpty && parentNameController.text.isNotEmpty){
+    try {
+      if (nameController.text.isNotEmpty && ageController.text.isNotEmpty && purokController.text.isNotEmpty && contactController.text.isNotEmpty && birthdateController.text.isNotEmpty && addressController.text.isNotEmpty && parentNameController.text.isNotEmpty) {
         Map<String, dynamic> kidData = {
           'name': nameController.text,
           'age': ageController.text,
@@ -53,21 +62,17 @@ class KidViewModel extends ChangeNotifier {
 
         await kidRepository.insertKid(kidData);
         clearData();
-      }
-      else{
+      } else {
         print('Please fill up all fields');
       }
-
-    }catch (e){
+    } catch (e) {
       print(e);
-    }
-    finally{
+    } finally {
       pd.close();
     }
-
   }
 
-  void clearData(){
+  void clearData() {
     nameController.clear();
     ageController.clear();
     purokController.clear();
@@ -75,10 +80,20 @@ class KidViewModel extends ChangeNotifier {
     birthdateController.clear();
     addressController.clear();
     parentNameController.clear();
-    selectedGender ='Male';
+    selectedGender = 'Male';
     notifyListeners();
   }
 
+  void _listenToUserStream() {
+    kidsStream.listen((kidlist) {
+      setKid(kidlist);
+      notifyListeners();
+    });
+  }
 
-
+  void setKid(List<KidModel> kidlist) {
+    kids = kidlist;
+    filteredKids = kids;
+    notifyListeners();
+  }
 }

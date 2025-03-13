@@ -10,20 +10,20 @@ abstract class KidRepository {
   Future<void> insertKid(Map<String, dynamic> kidData);
 
   Stream<List<KidModel>> getKids();
-
 }
 
 class KidRepositoryImpl implements KidRepository {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
   @override
   Future<void> insertKid(Map<String, dynamic> kidData) async {
-
-    try{
-      QuerySnapshot querySnapshot = await firebaseFirestore.collection('kids').where('name', isEqualTo: kidData['name']).get();
-      if (querySnapshot.docs.isEmpty){
+    try {
+      QuerySnapshot querySnapshot = await firebaseFirestore.collection('kids').where('Name', isEqualTo: kidData['name']).get();
+      if (querySnapshot.docs.isEmpty) {
         await firebaseFirestore.collection('kids').add({
           'Name': kidData['name'],
           'Age': kidData['age'],
+          'Gender': kidData['gender'],
           'Purok': kidData['purok'],
           'Contact': kidData['contact'],
           'Birthdate': kidData['birthdate'],
@@ -32,20 +32,17 @@ class KidRepositoryImpl implements KidRepository {
           'registeredAt': Timestamp.now(),
         });
         FlutterToastWidget().showMessage(Colors.green, "Kid added successfully");
+      } else {
+        print('Name already exists');
+        FlutterToastWidget().showMessage(Colors.red, "Name already exists");
       }
-      else{
-        print('Name already exist');
-        FlutterToastWidget().showMessage(Colors.red, "Name already exist");
-      }
-
-    } catch (e){
+    } catch (e) {
       print(e);
     }
   }
 
   @override
   Stream<List<KidModel>> getKids() {
-   return firebaseFirestore.collection('kids').snapshots().map((event) => event.docs.map((e) => KidModel.fromDocumentSnapShot(e)).toList());
+    return firebaseFirestore.collection('kids').snapshots().map((snapshot) => snapshot.docs.map((doc) => KidModel.fromDocumentSnapShot(doc)).toList());
   }
-
 }
