@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import '../Repositoryy/KidRepository.dart';
+import '../model/KidModel.dart';
 
 class KidViewModel extends ChangeNotifier {
 
@@ -18,6 +19,12 @@ class KidViewModel extends ChangeNotifier {
 
   var genderList = ['Male', 'Female'];
   var selectedGender ='Male';
+
+  List<KidModel> kids = [];
+  List<KidModel> filteredKids = [];
+
+  Stream<List<KidModel>> get kidsStream => kidRepository.getKids();
+
 
   void filterUser(String query) {
 

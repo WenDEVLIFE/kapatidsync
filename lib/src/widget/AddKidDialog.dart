@@ -274,8 +274,6 @@ class AddKidDialog extends StatelessWidget {
           ),
         ),
       ],
-
-
     );
   }
 
