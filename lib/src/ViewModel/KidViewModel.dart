@@ -6,7 +6,6 @@ import '../Repositoryy/KidRepository.dart';
 import '../model/KidModel.dart';
 
 class KidViewModel extends ChangeNotifier {
-
   final TextEditingController searchController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
@@ -19,7 +18,7 @@ class KidViewModel extends ChangeNotifier {
   final KidRepository kidRepository = KidRepositoryImpl();
 
   var genderList = ['Male', 'Female'];
-  var selectedGender ='Male';
+  var selectedGender = 'Male';
 
   List<KidModel> kids = [];
   List<KidModel> filteredKids = [];
@@ -29,7 +28,7 @@ class KidViewModel extends ChangeNotifier {
   Stream<List<KidModel>> get kidsStream => kidRepository.getKids();
 
   KidViewModel() {
-    _listenToUserStream();
+    listenToUserStream();
   }
 
   void filterUser(String query) {
@@ -50,7 +49,13 @@ class KidViewModel extends ChangeNotifier {
     ProgressDialog pd = ProgressDialog(context: context);
     pd.show(max: 100, msg: 'Adding Kid...');
     try {
-      if (nameController.text.isNotEmpty && ageController.text.isNotEmpty && purokController.text.isNotEmpty && contactController.text.isNotEmpty && birthdateController.text.isNotEmpty && addressController.text.isNotEmpty && parentNameController.text.isNotEmpty) {
+      if (nameController.text.isNotEmpty &&
+          ageController.text.isNotEmpty &&
+          purokController.text.isNotEmpty &&
+          contactController.text.isNotEmpty &&
+          birthdateController.text.isNotEmpty &&
+          addressController.text.isNotEmpty &&
+          parentNameController.text.isNotEmpty) {
         Map<String, dynamic> kidData = {
           'name': nameController.text,
           'age': ageController.text,
@@ -86,7 +91,7 @@ class KidViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _listenToUserStream() {
+  void listenToUserStream() {
     kidsStream.listen((kidlist) {
       setKid(kidlist);
       notifyListeners();
@@ -139,5 +144,17 @@ class KidViewModel extends ChangeNotifier {
       kid.isSelected = false;
     });
     notifyListeners();
+  }
+
+  Future<void> addKidToAttendance(BuildContext context, String attendanceId, KidModel kid, TimeOfDay time, bool isAttended) async {
+    ProgressDialog pd = ProgressDialog(context: context);
+    pd.show(max: 100, msg: 'Adding Kid to Attendance...');
+    try {
+      await kidRepository.addKidToAttendance(attendanceId, kid, time, isAttended);
+    } catch (e) {
+      print(e);
+    } finally {
+      pd.close();
+    }
   }
 }

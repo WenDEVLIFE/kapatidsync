@@ -11,6 +11,7 @@ abstract class KidRepository {
   Stream<List<KidModel>> getKids();
   Future<void> recordAttendance(List<KidModel> selectedKids);
   Future<void> deleteKid(String kidId);
+  Future<void> addKidToAttendance(String attendanceId, KidModel kid, TimeOfDay time, bool isAttended);
 }
 
 class KidRepositoryImpl implements KidRepository {
@@ -59,17 +60,16 @@ class KidRepositoryImpl implements KidRepository {
       });
 
       for (KidModel kid in selectedKids) {
-
         DateTime now = DateTime.now();
         String formattedDate = "${now.year}-${now.month}-${now.day}";
-        String formattedTime = "${now.hour}:${now.minute}";
+        String formattedTime = kid.isSelected ? "${now.hour}:${now.minute}" : "No Time In";
         await attendanceDocRef.collection('KidCollection').add({
           'KidID': kid.id,
           'Name': kid.fullname,
           'Age': kid.age,
           'Gender': kid.gender,
           'Purok': kid.purok,
-          'DateIn':formattedDate,
+          'DateIn': formattedDate,
           'TimeIn': formattedTime,
           'isAttended': kid.isSelected,
           'registeredAt': Timestamp.now(),
@@ -83,5 +83,48 @@ class KidRepositoryImpl implements KidRepository {
   @override
   Future<void> deleteKid(String kidId) {
     return firebaseFirestore.collection('kids').doc(kidId).delete();
+  }
+
+  @override
+  Future<void> addKidToAttendance(String attendanceId, KidModel kid, TimeOfDay time, bool isAttended) async {
+    try {
+      DateTime now = DateTime.now();
+      String formattedDate = "${now.year}-${now.month}-${now.day}";
+      String? formattedTime = isAttended ? "${time.hour}:${time.minute}" : "No Time In";
+
+      // Check if the kid already exists in the KidCollection
+      QuerySnapshot querySnapshot = await firebaseFirestore
+          .collection('attendancecollection')
+          .doc(attendanceId)
+          .collection('KidCollection')
+          .where('KidID', isEqualTo: kid.id)
+          .get();
+
+      if (querySnapshot.docs.isEmpty) {
+        // Kid does not exist, add to KidCollection
+        await firebaseFirestore
+            .collection('attendancecollection')
+            .doc(attendanceId)
+            .collection('KidCollection')
+            .add({
+          'KidID': kid.id,
+          'Name': kid.fullname,
+          'Age': kid.age,
+          'Gender': kid.gender,
+          'Purok': kid.purok,
+          'DateIn': formattedDate,
+          'TimeIn': formattedTime,
+          'isAttended': isAttended,
+          'registeredAt': Timestamp.now(),
+        });
+        FlutterToastWidget().showMessage(Colors.green, "Kid added to attendance successfully");
+      } else {
+        // Kid already exists
+        FlutterToastWidget().showMessage(Colors.red, "Kid already exists in attendance");
+      }
+    } catch (e) {
+      print(e);
+      FlutterToastWidget().showMessage(Colors.red, "Failed to add kid to attendance");
+    }
   }
 }

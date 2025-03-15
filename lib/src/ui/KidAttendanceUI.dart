@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../ViewModel/AttendanceViewModel.dart';
 import '../config/ColorUtils.dart';
 import '../model/KidModelII.dart';
+import '../widget/AddAttendanceKidDialog.dart';
 import '../widget/AlertDialogOptionWidget.dart';
 
 class KidCollectionUI extends StatefulWidget {
@@ -228,7 +229,7 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
         backgroundColor: ColorUtils.primaryColor,
         children: [
           SpeedDialChild(
-            child: const Icon(Icons.add),
+            child: const Icon(Icons.add, color: ColorUtils.secondaryColor,),
             backgroundColor: ColorUtils.primaryColor,
             label: 'Add Kid',
             labelStyle: const TextStyle(
@@ -238,11 +239,14 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
               color: Colors.white,
             ),
             onTap: () {
+              showDialog(context: context, builder: (BuildContext context) {
+                return AddAttendanceKidDialog(attendanceId: widget.attendanceId);
+              });
 
             },
           ),
           SpeedDialChild(
-            child: const Icon(Icons.print),
+            child: const Icon(Icons.print,color: ColorUtils.secondaryColor),
             backgroundColor: ColorUtils.primaryColor,
             label: 'Save Attendance',
             labelStyle: const TextStyle(
