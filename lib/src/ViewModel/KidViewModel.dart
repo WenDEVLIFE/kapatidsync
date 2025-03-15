@@ -57,6 +57,7 @@ class KidViewModel extends ChangeNotifier {
           'contact': contactController.text,
           'birthdate': birthdateController.text,
           'address': addressController.text,
+          'gender': selectedGender,
           'parentName': parentNameController.text,
         };
 
