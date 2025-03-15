@@ -75,4 +75,8 @@ class AttendanceViewModel extends ChangeNotifier {
     int absentCount = kidCollectionList.where((kid) => kid.isPresent == 'Absent').length;
     return (absentCount / kidCollectionList.length) * 100;
   }
+
+  void deleteKid(String kidId, String attendanceId) {
+    attendanceRepository.deleteKid(kidId, attendanceId);
+  }
 }

@@ -173,7 +173,7 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
                                   content: 'Are you sure you want to delete ${kid.kidName}?',
                                   onPressed: () {
                                     Navigator.of(context).pop();
-                                    // Add delete functionality here
+                                    viewModel.deleteKid(kid.kidId, widget.attendanceId);
                                   },
                                 ).build(context);
                               });

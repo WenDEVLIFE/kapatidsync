@@ -7,7 +7,9 @@ import '../model/KidModelII.dart';
 abstract class AttendanceRepository {
   Stream<List<AttendanceModel>> getAttendance();
   Future<void> deleteAttendanceLogs(String id);
-  Stream<List<KidModelII>> getKidCollection(String attendanceId); // New method
+  Stream<List<KidModelII>> getKidCollection(String attendanceId);
+
+  Future <void> deleteKid(String kidId, String attendanceId);// New method
 }
 
 class AttendanceRepositoryImpl implements AttendanceRepository {
@@ -31,5 +33,11 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
         .collection('KidCollection')
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => KidModelII.fromDocumentSnapShot(doc)).toList());
+  }
+
+  // Added deleteKid method
+  @override
+  Future<void> deleteKid(String kidId , String attendanceId) {
+   return firebaseFirestore.collection('attendancecollection').doc(attendanceId).collection('KidCollection').doc(kidId).delete();
   }
 }
