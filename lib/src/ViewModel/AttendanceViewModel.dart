@@ -18,12 +18,28 @@ class AttendanceViewModel extends ChangeNotifier {
     attendanceListen();
   }
 
+  // Listen to the attendance logs
   void attendanceListen() {
     attendanceStream.listen((event) {
       attendanceList = event;
       filteredAttendanceList = attendanceList;
       notifyListeners();
     });
+  }
+
+  // Filter the attendance logs
+  void filterUser(String query) {
+   if (query.isNotEmpty) {
+     filteredAttendanceList = attendanceList.where((attendance) => attendance.attendanceName.toLowerCase().contains(query.toLowerCase())).toList();
+    } else {
+      filteredAttendanceList = attendanceList;
+   }
+    notifyListeners();
+  }
+
+  // Delete the attendance logs
+  void deleteAttendanceLogs(String id) {
+    attendanceRepository.deleteAttendanceLogs(id);
   }
 
 

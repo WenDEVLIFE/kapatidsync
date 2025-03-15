@@ -128,6 +128,7 @@ class AttendanceLogsUI extends StatelessWidget {
                                           content: 'Are you sure you want to delete this attendance logs?',
                                           onPressed: () {
                                             Navigator.of(context).pop();
+                                            viewModel.deleteAttendanceLogs(data.attendanceId);
                                           },
                                         ).build(context);
                                       });
