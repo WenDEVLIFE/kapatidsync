@@ -124,4 +124,8 @@ class KidViewModel extends ChangeNotifier {
       pd.close();
     }
   }
+
+  void deleteKid(KidModel kid) {
+    kidRepository.deleteKid(kid.id);
+  }
 }

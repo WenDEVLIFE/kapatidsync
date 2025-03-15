@@ -143,6 +143,7 @@ class KidUI extends StatelessWidget {
                                           content: 'Are you sure you want to delete this kid?',
                                           onPressed: () {
                                             Navigator.of(context).pop();
+                                            viewModel.deleteKid(user);
                                           },
                                         ).build(context);
                                       });

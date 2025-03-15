@@ -10,6 +10,7 @@ abstract class KidRepository {
   Future<void> insertKid(Map<String, dynamic> kidData);
   Stream<List<KidModel>> getKids();
   Future<void> recordAttendance(List<KidModel> selectedKids);
+  Future<void> deleteKid(String kidId);
 }
 
 class KidRepositoryImpl implements KidRepository {
@@ -74,5 +75,10 @@ class KidRepositoryImpl implements KidRepository {
     } catch (e) {
       print(e);
     }
+  }
+
+  @override
+  Future<void> deleteKid(String kidId) {
+    return firebaseFirestore.collection('kids').doc(kidId).delete();
   }
 }
