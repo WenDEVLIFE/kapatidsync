@@ -80,86 +80,96 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
           Expanded(
             child: Consumer<AttendanceViewModel>(
               builder: (context, viewModel, child) {
-                if (viewModel.getKidCollection.isEmpty) {
-                  return Center(child: CircularProgressIndicator());
-                } else {
-                  return ListView.builder(
-                    itemCount: viewModel.getKidCollection.length,
-                    itemBuilder: (context, index) {
-                      KidModel kid = viewModel.getKidCollection[index];
-                      return Card(
-                        color: ColorUtils.primaryColor,
-                        child: ListTile(
-                          title: Text(
-                            kid.fullname,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w800,
-                              fontFamily: 'SmoochSans',
-                              color: Colors.white,
+                  if (viewModel.getKidCollection.isEmpty){
+                    return Center(
+                      child: Text(
+                        '${viewModel.attendanceSearchController.text} not found',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
+                          fontFamily: 'SmoochSans',
+                          color: Colors.black,
+                        ),
+                      ),
+                    );
+                  } else{
+                    return ListView.builder(
+                      itemCount: viewModel.getKidCollection.length,
+                      itemBuilder: (context, index, ) {
+                        KidModel kid = viewModel.getKidCollection[index];
+                        return Card(
+                          color: ColorUtils.primaryColor,
+                          child: ListTile(
+                            title: Text(
+                              kid.fullname,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w800,
+                                fontFamily: 'SmoochSans',
+                                color: Colors.white,
+                              ),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Date: ${kid.birthdate}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: 'SmoochSans',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  'Age: ${kid.age}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: 'SmoochSans',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  'Purok: ${kid.purok}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: 'SmoochSans',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  'Contact Number: ${kid.phoneNumber}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: 'SmoochSans',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.white),
+                              onPressed: () {
+                                showDialog(context: context, builder: (BuildContext context) {
+                                  return AlertDialogOptionWidget(
+                                    title: 'Delete ${kid.fullname}',
+                                    content: 'Are you sure you want to delete ${kid.fullname}?',
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      // Add delete functionality here
+                                    },
+                                  ).build(context);
+                                });
+                              },
                             ),
                           ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Date: ${kid.birthdate}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: 'SmoochSans',
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Text(
-                                'Age: ${kid.age}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: 'SmoochSans',
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Text(
-                                'Purok: ${kid.purok}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: 'SmoochSans',
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Text(
-                                'Contact Number: ${kid.phoneNumber}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: 'SmoochSans',
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.white),
-                            onPressed: () {
-                              showDialog(context: context, builder: (BuildContext context) {
-                                return AlertDialogOptionWidget(
-                                  title: 'Delete ${kid.fullname}',
-                                  content: 'Are you sure you want to delete ${kid.fullname}?',
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    // Add delete functionality here
-                                  },
-                                ).build(context);
-                              });
-                            },
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }
+                        );
+                      },
+                    );
+                  }
               },
             ),
           ),

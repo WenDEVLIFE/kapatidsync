@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kapatidsync/src/ViewModel/AttendanceViewModel.dart';
 import 'package:provider/provider.dart';
-
 import '../config/ColorUtils.dart';
 import '../model/AttendanceModel.dart';
 import '../widget/AlertDialogOptionWidget.dart';
+import '../ViewModel/AttendanceViewModel.dart';
 import 'KidAttendanceUI.dart';
 
 class AttendanceLogsUI extends StatelessWidget {
@@ -43,7 +41,7 @@ class AttendanceLogsUI extends StatelessWidget {
               child: TextField(
                 controller: viewModel.attendanceSearchController,
                 onChanged: (query) {
-                  // viewModel.filterUser(query);
+                  viewModel.filterUser(query); // Call filterUser method
                 },
                 decoration: InputDecoration(
                   filled: true,
@@ -53,7 +51,7 @@ class AttendanceLogsUI extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                     borderSide: const BorderSide(color: Colors.transparent, width: 2),
                   ),
-                  hintText: 'Search a attendance logs....',
+                  hintText: 'Search attendance logs...',
                   hintStyle: const TextStyle(
                     color: Colors.black,
                   ),
@@ -80,69 +78,83 @@ class AttendanceLogsUI extends StatelessWidget {
                 } else {
                   return Consumer<AttendanceViewModel>(
                     builder: (context, viewModel, child) {
-                      return ListView.builder(
-                        itemCount: viewModel.getAttendance.length,
-                        itemBuilder: (context, index) {
-                          AttendanceModel data = viewModel.getAttendance[index];
+                      if (viewModel.getAttendance.isEmpty) {
+                        return Center(
+                          child: Text(
+                            '${viewModel.attendanceSearchController.text} not found',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                              fontFamily: 'SmoochSans',
+                              color: Colors.black,
+                            ),
+                          ),
+                        );
+                      } else {
+                        return ListView.builder(
+                          itemCount: viewModel.getAttendance.length,
+                          itemBuilder: (context, index) {
+                            AttendanceModel data = viewModel.getAttendance[index];
 
-                          return Card(
-                            color: ColorUtils.primaryColor,
-                            child: ListTile(
-                              title: Text(
-                                'Category Name: ${data.attendanceName}',
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: 'SmoochSans',
-                                  color: Colors.white,
+                            return Card(
+                              color: ColorUtils.primaryColor,
+                              child: ListTile(
+                                title: Text(
+                                  'Category Name: ${data.attendanceName}',
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: 'SmoochSans',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Date: ${data.attendanceDate}',
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w800,
+                                        fontFamily: 'SmoochSans',
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.remove_red_eye, color: Colors.white),
+                                      onPressed: () {
+                                        Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (context) => KidCollectionUI(attendanceId: data.attendanceId),
+                                        ));
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.delete, color: Colors.white),
+                                      onPressed: () {
+                                        showDialog(context: context, builder: (BuildContext context) {
+                                          return AlertDialogOptionWidget(
+                                            title: 'Delete Attendance Logs',
+                                            content: 'Are you sure you want to delete this attendance logs?',
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                              viewModel.deleteAttendanceLogs(data.attendanceId);
+                                            },
+                                          ).build(context);
+                                        });
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Date: ${data.attendanceDate}',
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w800,
-                                      fontFamily: 'SmoochSans',
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.remove_red_eye, color: Colors.white),
-                                    onPressed: () {
-                                      Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) => KidCollectionUI(attendanceId: data.attendanceId),
-                                      ));
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.delete, color: Colors.white),
-                                    onPressed: () {
-                                      showDialog(context: context, builder: (BuildContext context) {
-                                        return AlertDialogOptionWidget(
-                                          title: 'Delete Attendance Logs',
-                                          content: 'Are you sure you want to delete this attendance logs?',
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                            viewModel.deleteAttendanceLogs(data.attendanceId);
-                                          },
-                                        ).build(context);
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
+                            );
+                          },
+                        );
+                      }
                     },
                   );
                 }
