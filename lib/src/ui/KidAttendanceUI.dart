@@ -9,8 +9,9 @@ import '../widget/AlertDialogOptionWidget.dart';
 
 class KidCollectionUI extends StatefulWidget {
   final String attendanceId;
+  final String date;
 
-  KidCollectionUI({required this.attendanceId});
+  KidCollectionUI({required this.attendanceId, required this.date});
 
   @override
   _KidCollectionUIState createState() => _KidCollectionUIState();
@@ -22,6 +23,7 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
     super.initState();
     final viewModel = Provider.of<AttendanceViewModel>(context, listen: false);
     viewModel.fetchKidCollection(widget.attendanceId); // Fetch KidCollection data
+    widget.date;
   }
 
   @override
@@ -32,7 +34,8 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorUtils.primaryColor,
-        title: const Text('Date', style: TextStyle(
+        title:  Text('Attendance Logs for ${widget.date}',
+          style: const TextStyle(
           color: Colors.white,
           fontSize: 20,
           fontFamily: 'Lato',

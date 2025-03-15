@@ -18,12 +18,18 @@ class AttendanceLogsUI extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorUtils.primaryColor,
-        title: const Text('Attendance Logs', style: TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-          fontFamily: 'Lato',
-          fontWeight: FontWeight.w700,
-        ),),
+        title: const SingleChildScrollView(
+          child: Row(
+            children: [
+              Text('Attendance Logs', style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontFamily: 'Lato',
+                fontWeight: FontWeight.w700,
+              ),),
+            ],
+          ),
+        )
       ),
       body: Column(
         children: [
@@ -129,7 +135,7 @@ class AttendanceLogsUI extends StatelessWidget {
                                       icon: const Icon(Icons.remove_red_eye, color: Colors.white),
                                       onPressed: () {
                                         Navigator.of(context).push(MaterialPageRoute(
-                                          builder: (context) => KidCollectionUI(attendanceId: data.attendanceId),
+                                          builder: (context) => KidCollectionUI(attendanceId: data.attendanceId, date: data.attendanceDate),
                                         ));
                                       },
                                     ),
