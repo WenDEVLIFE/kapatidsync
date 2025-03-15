@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kapatidsync/src/ViewModel/AttendanceViewModel.dart';
 import 'package:kapatidsync/src/ViewModel/KidViewModel.dart';
 import 'package:kapatidsync/src/ViewModel/LoginViewModel.dart';
 import 'package:kapatidsync/src/ViewModel/MenuViewModel.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UserViewModel()),
         ChangeNotifierProvider(create: (context) => MenuViewModel()),
         ChangeNotifierProvider(create: (context) => KidViewModel()),
+        ChangeNotifierProvider(create: (context) => AttendanceViewModel()),
       ],
       child: MaterialApp(
         key: GlobalKey(),
