@@ -118,6 +118,7 @@ class KidViewModel extends ChangeNotifier {
           backgroundColor: Colors.green,
         ),
       );
+      uncheckedAll();
     } catch (e) {
       print(e);
     } finally {
@@ -127,5 +128,16 @@ class KidViewModel extends ChangeNotifier {
 
   void deleteKid(KidModel kid) {
     kidRepository.deleteKid(kid.id);
+  }
+
+  bool isAnyKidSelected() {
+    return getKid.any((kid) => kid.isSelected);
+  }
+
+  void uncheckedAll() {
+    getKid.forEach((kid) {
+      kid.isSelected = false;
+    });
+    notifyListeners();
   }
 }

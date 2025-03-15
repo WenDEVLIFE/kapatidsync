@@ -81,80 +81,93 @@ class KidUI extends StatelessWidget {
                 } else {
                   return Consumer<KidViewModel>(
                     builder: (context, viewModel, child) {
-                      return ListView.builder(
-                        itemCount: viewModel.getKid.length,
-                        itemBuilder: (context, index) {
-                          KidModel user = viewModel.getKid[index];
-
-                          return Card(
-                            color: ColorUtils.primaryColor,
-                            child: ListTile(
-                              leading: Checkbox(
-                                activeColor: ColorUtils.accentColor, // Background color of the checkbox
-                                checkColor: ColorUtils.secondaryColor, // Color of the check
-                                value: user.isSelected,
-                                side: const BorderSide(color: ColorUtils.secondaryColor, width: 2.0), // Border color and width
-                                onChanged: (bool? value) {
-                                  user.isSelected = value ?? false;
-                                  viewModel.notifyListeners();
-                                },
-                              ),
-                              title: Text(
-                                user.fullname,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: 'SmoochSans',
-                                  color: Colors.white,
+                      if (viewModel.getKid.isEmpty) {
+                        return Center(
+                          child: Text(
+                            '${viewModel.searchController.text} not found',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'Lato',
+                              color: Colors.black,
+                            ),
+                          ),
+                        );
+                      } else {
+                        return ListView.builder(
+                          itemCount: viewModel.getKid.length,
+                          itemBuilder: (context, index) {
+                            KidModel user = viewModel.getKid[index];
+                            return Card(
+                              color: ColorUtils.primaryColor,
+                              child: ListTile(
+                                leading: Checkbox(
+                                  activeColor: ColorUtils.accentColor,
+                                  checkColor: ColorUtils.secondaryColor,
+                                  value: user.isSelected,
+                                  side: const BorderSide(color: ColorUtils.secondaryColor, width: 2.0),
+                                  onChanged: (bool? value) {
+                                    user.isSelected = value ?? false;
+                                    viewModel.notifyListeners();
+                                  },
+                                ),
+                                title: Text(
+                                  user.fullname,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: 'Lato',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Age: ${user.age}',
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Lato',
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Gender: ${user.gender}',
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Lato',
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.delete, color: Colors.white),
+                                      onPressed: () {
+                                        showDialog(context: context, builder: (BuildContext context) {
+                                          return AlertDialogOptionWidget(
+                                            title: 'Delete a kid',
+                                            content: 'Are you sure you want to delete this kid?',
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                              viewModel.deleteKid(user);
+                                            },
+                                          ).build(context);
+                                        });
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Age: ${user.age}',
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w800,
-                                      fontFamily: 'SmoochSans',
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Gender: ${user.gender}',
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w800,
-                                      fontFamily: 'SmoochSans',
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.delete, color: Colors.white),
-                                    onPressed: () {
-                                      showDialog(context: context, builder: (BuildContext context) {
-                                        return AlertDialogOptionWidget(
-                                          title: 'Delete a kid',
-                                          content: 'Are you sure you want to delete this kid?',
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                            viewModel.deleteKid(user);
-                                          },
-                                        ).build(context);
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
+                            );
+                          },
+                        );
+                      }
                     },
                   );
                 }
@@ -164,10 +177,39 @@ class KidUI extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: ColorUtils.primaryColor,
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
               onPressed: () async {
-                await viewModel.recordAttendance(context);
+                if (viewModel.isAnyKidSelected()) {
+                  await viewModel.recordAttendance(context);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Please select a kid to record attendance',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      backgroundColor: ColorUtils.accentColor,
+                    ),
+                  );
+                }
               },
-              child: Text('Record Attendance'),
+              child: const Text('Record Attendance' , style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                fontFamily: 'w700',
+                color: Colors.white,
+              )),
             ),
           ),
         ],
