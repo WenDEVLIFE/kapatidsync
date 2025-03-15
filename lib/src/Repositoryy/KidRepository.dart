@@ -59,16 +59,18 @@ class KidRepositoryImpl implements KidRepository {
       });
 
       for (KidModel kid in selectedKids) {
+
+        DateTime now = DateTime.now();
+        String formattedDate = "${now.year}-${now.month}-${now.day}";
+        String formattedTime = "${now.hour}:${now.minute}";
         await attendanceDocRef.collection('KidCollection').add({
           'KidID': kid.id,
           'Name': kid.fullname,
           'Age': kid.age,
           'Gender': kid.gender,
           'Purok': kid.purok,
-          'PhoneNumber': kid.phoneNumber,
-          'Birthdate': kid.birthdate,
-          'Address': kid.address,
-          'ParentName': kid.parentName,
+          'DateIn':formattedDate,
+          'TimeIn': formattedTime,
           'isAttended': kid.isSelected,
           'registeredAt': Timestamp.now(),
         });

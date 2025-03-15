@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:kapatidsync/src/Repositoryy/AttendanceRepository.dart';
 import 'package:kapatidsync/src/model/AttendanceModel.dart';
-import 'package:kapatidsync/src/model/KidModel.dart';
+import 'package:kapatidsync/src/model/KidModelII.dart';
 
 class AttendanceViewModel extends ChangeNotifier {
   final TextEditingController attendanceSearchController = TextEditingController();
@@ -9,11 +9,11 @@ class AttendanceViewModel extends ChangeNotifier {
 
   List<AttendanceModel> attendanceList = [];
   List<AttendanceModel> filteredAttendanceList = [];
-  List<KidModel> kidCollectionList = [];
-  List<KidModel> filteredKidCollectionList = [];
+  List<KidModelII> kidCollectionList = [];
+  List<KidModelII> filteredKidCollectionList = [];
 
   List<AttendanceModel> get getAttendance => filteredAttendanceList;
-  List<KidModel> get getKidCollection => filteredKidCollectionList;
+  List<KidModelII> get getKidCollection => filteredKidCollectionList;
 
   Stream<List<AttendanceModel>> get attendanceStream => attendanceRepository.getAttendance();
 
@@ -51,14 +51,14 @@ class AttendanceViewModel extends ChangeNotifier {
 
   void filterKid(String query) {
     if (query.isNotEmpty) {
-      filteredKidCollectionList = kidCollectionList.where((kid) => kid.fullname.toLowerCase().contains(query.toLowerCase())).toList();
+      filteredKidCollectionList = kidCollectionList.where((kid) => kid.kidName.toLowerCase().contains(query.toLowerCase())).toList();
     } else {
       filteredKidCollectionList = kidCollectionList;
     }
     notifyListeners();
   }
 
-  void setKidCollection(List<KidModel> event) {
+  void setKidCollection(List<KidModelII> event) {
     kidCollectionList = event;
     filteredKidCollectionList = kidCollectionList;
     notifyListeners();

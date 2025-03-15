@@ -2,11 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kapatidsync/src/model/KidModel.dart';
 
 import '../model/AttendanceModel.dart';
+import '../model/KidModelII.dart';
 
 abstract class AttendanceRepository {
   Stream<List<AttendanceModel>> getAttendance();
   Future<void> deleteAttendanceLogs(String id);
-  Stream<List<KidModel>> getKidCollection(String attendanceId); // New method
+  Stream<List<KidModelII>> getKidCollection(String attendanceId); // New method
 }
 
 class AttendanceRepositoryImpl implements AttendanceRepository {
@@ -23,12 +24,12 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
   }
 
   @override
-  Stream<List<KidModel>> getKidCollection(String attendanceId) {
+  Stream<List<KidModelII>> getKidCollection(String attendanceId) {
     return firebaseFirestore
         .collection('attendancecollection')
         .doc(attendanceId)
         .collection('KidCollection')
         .snapshots()
-        .map((snapshot) => snapshot.docs.map((doc) => KidModel.fromDocumentSnapShot(doc)).toList());
+        .map((snapshot) => snapshot.docs.map((doc) => KidModelII.fromDocumentSnapShot(doc)).toList());
   }
 }

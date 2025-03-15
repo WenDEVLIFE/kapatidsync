@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../config/ColorUtils.dart';
-import '../model/KidModel.dart';
+import '../model/KidModelII.dart';
 import '../widget/AlertDialogOptionWidget.dart';
 import '../ViewModel/AttendanceViewModel.dart';
 
@@ -96,12 +96,12 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
                     return ListView.builder(
                       itemCount: viewModel.getKidCollection.length,
                       itemBuilder: (context, index, ) {
-                        KidModel kid = viewModel.getKidCollection[index];
+                        KidModelII kid = viewModel.getKidCollection[index];
                         return Card(
                           color: ColorUtils.primaryColor,
                           child: ListTile(
                             title: Text(
-                              kid.fullname,
+                              kid.kidName,
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w800,
@@ -113,7 +113,7 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Date: ${kid.birthdate}',
+                                  'Age: ${kid.kidAge}',
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w800,
@@ -122,7 +122,7 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
                                   ),
                                 ),
                                 Text(
-                                  'Age: ${kid.age}',
+                                  'Gender: ${kid.kidGender}',
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w800,
@@ -131,7 +131,7 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
                                   ),
                                 ),
                                 Text(
-                                  'Purok: ${kid.purok}',
+                                  'Purok: ${kid.kidPurok}',
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w800,
@@ -140,7 +140,7 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
                                   ),
                                 ),
                                 Text(
-                                  'Contact Number: ${kid.phoneNumber}',
+                                  kid.isPresent == 'Present' ? 'Present' : 'Absent',
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w800,
@@ -148,6 +148,16 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
                                     color: Colors.white,
                                   ),
                                 ),
+                                Text(
+                                  kid.isPresent == 'Present' ? 'Time In: ${kid.kidTimeIn}' : '',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: 'SmoochSans',
+                                    color: Colors.white,
+                                  ),
+                                )
+
                               ],
                             ),
                             trailing: IconButton(
@@ -155,8 +165,8 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
                               onPressed: () {
                                 showDialog(context: context, builder: (BuildContext context) {
                                   return AlertDialogOptionWidget(
-                                    title: 'Delete ${kid.fullname}',
-                                    content: 'Are you sure you want to delete ${kid.fullname}?',
+                                    title: 'Delete ${kid.kidName}',
+                                    content: 'Are you sure you want to delete ${kid.kidName}?',
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                       // Add delete functionality here
