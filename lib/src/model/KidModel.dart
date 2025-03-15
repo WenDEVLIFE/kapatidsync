@@ -8,6 +8,7 @@ class KidModel {
   final String address;
   final String phoneNumber;
   final String parentName;
+  bool isSelected;
 
   KidModel({
     required this.id,
@@ -17,6 +18,7 @@ class KidModel {
     required this.address,
     required this.phoneNumber,
     required this.parentName,
+    this.isSelected = false,
   });
 
   factory KidModel.fromDocumentSnapShot(DocumentSnapshot doc) {
@@ -28,6 +30,7 @@ class KidModel {
       address: doc['Address'],
       phoneNumber: doc['Contact'],
       parentName: doc['ParentName'],
+      isSelected: false, // Ensure isSelected is initialized
     );
   }
 }

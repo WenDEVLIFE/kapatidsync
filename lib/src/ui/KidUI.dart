@@ -88,6 +88,16 @@ class KidUI extends StatelessWidget {
                           return Card(
                             color: ColorUtils.primaryColor,
                             child: ListTile(
+                              leading: Checkbox(
+                                activeColor: ColorUtils.accentColor, // Background color of the checkbox
+                                checkColor: ColorUtils.secondaryColor, // Color of the check
+                                value: user.isSelected,
+                                side: const BorderSide(color: ColorUtils.secondaryColor, width: 2.0), // Border color and width
+                                onChanged: (bool? value) {
+                                  user.isSelected = value ?? false;
+                                  viewModel.notifyListeners();
+                                },
+                              ),
                               title: Text(
                                 user.fullname,
                                 style: const TextStyle(
