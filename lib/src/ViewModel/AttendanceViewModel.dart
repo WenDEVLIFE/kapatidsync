@@ -44,8 +44,7 @@ class AttendanceViewModel extends ChangeNotifier {
 
   void fetchKidCollection(String attendanceId) {
     attendanceRepository.getKidCollection(attendanceId).listen((event) {
-      kidCollectionList = event;
-      filteredKidCollectionList = kidCollectionList;
+      setKidCollection(event);
       notifyListeners();
     });
   }
@@ -56,6 +55,12 @@ class AttendanceViewModel extends ChangeNotifier {
     } else {
       filteredKidCollectionList = kidCollectionList;
     }
+    notifyListeners();
+  }
+
+  void setKidCollection(List<KidModel> event) {
+    kidCollectionList = event;
+    filteredKidCollectionList = kidCollectionList;
     notifyListeners();
   }
 }

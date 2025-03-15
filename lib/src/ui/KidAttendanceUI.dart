@@ -5,18 +5,27 @@ import '../model/KidModel.dart';
 import '../widget/AlertDialogOptionWidget.dart';
 import '../ViewModel/AttendanceViewModel.dart';
 
-class KidCollectionUI extends StatelessWidget {
+class KidCollectionUI extends StatefulWidget {
   final String attendanceId;
 
   KidCollectionUI({required this.attendanceId});
 
   @override
+  _KidCollectionUIState createState() => _KidCollectionUIState();
+}
+
+class _KidCollectionUIState extends State<KidCollectionUI> {
+  @override
+  void initState() {
+    super.initState();
+    final viewModel = Provider.of<AttendanceViewModel>(context, listen: false);
+    viewModel.fetchKidCollection(widget.attendanceId); // Fetch KidCollection data
+  }
+
+  @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-
-    final viewModel = Provider.of<AttendanceViewModel>(context);
-    viewModel.fetchKidCollection(attendanceId); // Fetch KidCollection data
 
     return Scaffold(
       appBar: AppBar(
