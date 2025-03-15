@@ -8,6 +8,8 @@ class KidModel {
   final String address;
   final String phoneNumber;
   final String parentName;
+  final String purok;
+  final String birthdate;
   bool isSelected;
 
   KidModel({
@@ -18,6 +20,8 @@ class KidModel {
     required this.address,
     required this.phoneNumber,
     required this.parentName,
+    required this.purok,
+    required this.birthdate,
     this.isSelected = false,
   });
 
@@ -30,6 +34,8 @@ class KidModel {
       address: doc['Address'],
       phoneNumber: doc['Contact'],
       parentName: doc['ParentName'],
+      purok: doc['Purok'],
+      birthdate: doc['Birthdate'],
       isSelected: false, // Ensure isSelected is initialized
     );
   }

@@ -8,8 +8,8 @@ import '../model/KidModel.dart';
 
 abstract class KidRepository {
   Future<void> insertKid(Map<String, dynamic> kidData);
-
   Stream<List<KidModel>> getKids();
+  Future<void> recordAttendance(List<KidModel> selectedKids);
 }
 
 class KidRepositoryImpl implements KidRepository {
@@ -44,5 +44,35 @@ class KidRepositoryImpl implements KidRepository {
   @override
   Stream<List<KidModel>> getKids() {
     return firebaseFirestore.collection('kids').snapshots().map((snapshot) => snapshot.docs.map((doc) => KidModel.fromDocumentSnapShot(doc)).toList());
+  }
+
+  @override
+  Future<void> recordAttendance(List<KidModel> selectedKids) async {
+    QuerySnapshot attendanceSnapshot = await firebaseFirestore.collection('attendancecollection').get();
+    int attendanceCount = attendanceSnapshot.size;
+
+    try {
+      DocumentReference attendanceDocRef = await firebaseFirestore.collection('attendancecollection').add({
+        'Date': Timestamp.now(),
+        'Category': 'Attendance ${attendanceCount == 0 ? 1 : attendanceCount + 1}',
+      });
+
+      for (KidModel kid in selectedKids) {
+        await attendanceDocRef.collection('KidCollection').add({
+          'KidID': kid.id,
+          'FullName': kid.fullname,
+          'Age': kid.age,
+          'Gender': kid.gender,
+          'Purok': kid.purok,
+          'PhoneNumber': kid.phoneNumber,
+          'Birthdate': kid.birthdate,
+          'Address': kid.address,
+          'ParentName': kid.parentName,
+          'isAttended': kid.isSelected,
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

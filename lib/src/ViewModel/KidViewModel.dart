@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import '../Repositoryy/KidRepository.dart';
@@ -96,5 +97,31 @@ class KidViewModel extends ChangeNotifier {
     kids = kidlist;
     filteredKids = kids;
     notifyListeners();
+  }
+
+  Future<void> recordAttendance(BuildContext context) async {
+    ProgressDialog pd = ProgressDialog(context: context);
+    pd.show(max: 100, msg: 'Recording Attendance...');
+    try {
+      await kidRepository.recordAttendance(getKid);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Attendance recorded for all kids',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontFamily: 'Lato',
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } catch (e) {
+      print(e);
+    } finally {
+      pd.close();
+    }
   }
 }

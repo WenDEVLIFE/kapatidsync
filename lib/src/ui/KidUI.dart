@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/ViewModel/KidViewModel.dart';
@@ -60,7 +61,7 @@ class KidUI extends StatelessWidget {
                   contentPadding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0),
                 ),
                 style: const TextStyle(
-                  fontFamily: 'LeagueSpartan',
+                  fontFamily: 'Lato',
                   color: Colors.black,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -157,6 +158,15 @@ class KidUI extends StatelessWidget {
                   );
                 }
               },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () async {
+                await viewModel.recordAttendance(context);
+              },
+              child: Text('Record Attendance'),
             ),
           ),
         ],
