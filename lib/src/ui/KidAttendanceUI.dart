@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 
 import '../ViewModel/AttendanceViewModel.dart';
@@ -34,13 +35,15 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorUtils.primaryColor,
-        title:  Text('Attendance Logs for ${widget.date}',
+        title: Text(
+          'Attendance Logs for ${widget.date}',
           style: const TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-          fontFamily: 'Lato',
-          fontWeight: FontWeight.w700,
-        ),),
+            color: Colors.white,
+            fontSize: 20,
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       ),
       body: Column(
         children: [
@@ -217,6 +220,41 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
               );
             },
           )
+        ],
+      ),
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: const IconThemeData(size: 22.0),
+        backgroundColor: ColorUtils.primaryColor,
+        children: [
+          SpeedDialChild(
+            child: const Icon(Icons.add),
+            backgroundColor: ColorUtils.primaryColor,
+            label: 'Add Kid',
+            labelStyle: const TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w800,
+              fontFamily: 'SmoochSans',
+              color: Colors.white,
+            ),
+            onTap: () {
+
+            },
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.print),
+            backgroundColor: ColorUtils.primaryColor,
+            label: 'Save Attendance',
+            labelStyle: const TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w800,
+              fontFamily: 'SmoochSans',
+              color: Colors.white,
+            ),
+            onTap: () {
+
+            },
+          ),
         ],
       ),
     );
