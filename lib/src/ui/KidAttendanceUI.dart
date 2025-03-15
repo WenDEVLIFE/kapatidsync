@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../ViewModel/AttendanceViewModel.dart';
 import '../config/ColorUtils.dart';
 import '../model/KidModelII.dart';
 import '../widget/AlertDialogOptionWidget.dart';
-import '../ViewModel/AttendanceViewModel.dart';
 
 class KidCollectionUI extends StatefulWidget {
   final String attendanceId;
@@ -80,109 +82,138 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
           Expanded(
             child: Consumer<AttendanceViewModel>(
               builder: (context, viewModel, child) {
-                  if (viewModel.getKidCollection.isEmpty){
-                    return Center(
-                      child: Text(
-                        '${viewModel.attendanceSearchController.text} not found',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                          fontFamily: 'SmoochSans',
-                          color: Colors.black,
-                        ),
+                if (viewModel.getKidCollection.isEmpty) {
+                  return Center(
+                    child: Text(
+                      '${viewModel.attendanceSearchController.text} not found',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                        fontFamily: 'SmoochSans',
+                        color: Colors.black,
                       ),
-                    );
-                  } else{
-                    return ListView.builder(
-                      itemCount: viewModel.getKidCollection.length,
-                      itemBuilder: (context, index, ) {
-                        KidModelII kid = viewModel.getKidCollection[index];
-                        return Card(
-                          color: ColorUtils.primaryColor,
-                          child: ListTile(
-                            title: Text(
-                              kid.kidName,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w800,
-                                fontFamily: 'SmoochSans',
-                                color: Colors.white,
-                              ),
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Age: ${kid.kidAge}',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w800,
-                                    fontFamily: 'SmoochSans',
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Text(
-                                  'Gender: ${kid.kidGender}',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w800,
-                                    fontFamily: 'SmoochSans',
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Text(
-                                  'Purok: ${kid.kidPurok}',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w800,
-                                    fontFamily: 'SmoochSans',
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Text(
-                                  kid.isPresent == 'Present' ? 'Present' : 'Absent',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w800,
-                                    fontFamily: 'SmoochSans',
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Text(
-                                  kid.isPresent == 'Present' ? 'Time In: ${kid.kidTimeIn}' : '',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w800,
-                                    fontFamily: 'SmoochSans',
-                                    color: Colors.white,
-                                  ),
-                                )
-
-                              ],
-                            ),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.delete, color: Colors.white),
-                              onPressed: () {
-                                showDialog(context: context, builder: (BuildContext context) {
-                                  return AlertDialogOptionWidget(
-                                    title: 'Delete ${kid.kidName}',
-                                    content: 'Are you sure you want to delete ${kid.kidName}?',
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      // Add delete functionality here
-                                    },
-                                  ).build(context);
-                                });
-                              },
+                    ),
+                  );
+                } else {
+                  return ListView.builder(
+                    itemCount: viewModel.getKidCollection.length,
+                    itemBuilder: (context, index) {
+                      KidModelII kid = viewModel.getKidCollection[index];
+                      return Card(
+                        color: ColorUtils.primaryColor,
+                        child: ListTile(
+                          title: Text(
+                            kid.kidName,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                              fontFamily: 'SmoochSans',
+                              color: Colors.white,
                             ),
                           ),
-                        );
-                      },
-                    );
-                  }
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Age: ${kid.kidAge}',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800,
+                                  fontFamily: 'SmoochSans',
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                'Gender: ${kid.kidGender}',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800,
+                                  fontFamily: 'SmoochSans',
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                'Purok: ${kid.kidPurok}',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800,
+                                  fontFamily: 'SmoochSans',
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                kid.isPresent == 'Present' ? 'Present' : 'Absent',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800,
+                                  fontFamily: 'SmoochSans',
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                kid.isPresent == 'Present' ? 'Time In: ${kid.kidTimeIn}' : '',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800,
+                                  fontFamily: 'SmoochSans',
+                                  color: Colors.white,
+                                ),
+                              )
+                            ],
+                          ),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete, color: Colors.white),
+                            onPressed: () {
+                              showDialog(context: context, builder: (BuildContext context) {
+                                return AlertDialogOptionWidget(
+                                  title: 'Delete ${kid.kidName}',
+                                  content: 'Are you sure you want to delete ${kid.kidName}?',
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    // Add delete functionality here
+                                  },
+                                ).build(context);
+                              });
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
               },
             ),
           ),
+          Consumer<AttendanceViewModel>(
+            builder: (context, viewModel, child) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'Present: ${viewModel.presentPercentage.toStringAsFixed(2)}%',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        fontFamily: 'SmoochSans',
+                        color: ColorUtils.primaryColor,
+                      ),
+                    ),
+                    Text(
+                      'Absent: ${viewModel.absentPercentage.toStringAsFixed(2)}%',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        fontFamily: 'SmoochSans',
+                        color: ColorUtils.accentColor,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          )
         ],
       ),
     );

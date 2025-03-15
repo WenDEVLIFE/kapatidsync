@@ -63,4 +63,16 @@ class AttendanceViewModel extends ChangeNotifier {
     filteredKidCollectionList = kidCollectionList;
     notifyListeners();
   }
+
+  double get presentPercentage {
+    if (kidCollectionList.isEmpty) return 0.0;
+    int presentCount = kidCollectionList.where((kid) => kid.isPresent == 'Present').length;
+    return (presentCount / kidCollectionList.length) * 100;
+  }
+
+  double get absentPercentage {
+    if (kidCollectionList.isEmpty) return 0.0;
+    int absentCount = kidCollectionList.where((kid) => kid.isPresent == 'Absent').length;
+    return (absentCount / kidCollectionList.length) * 100;
+  }
 }
