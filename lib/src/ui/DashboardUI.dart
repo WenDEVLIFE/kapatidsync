@@ -1,9 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/config/ColorUtils.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DashboardUI extends StatelessWidget {
   const DashboardUI({super.key});
+
+  Stream<int> _getCount(String collection) {
+    return FirebaseFirestore.instance.collection(collection).snapshots().map((snapshot) => snapshot.docs.length);
+  }
+
+  Stream<int> _getOfficerCount() {
+    return FirebaseFirestore.instance.collection('users').where('role', isEqualTo: 'Church Officer').snapshots().map((snapshot) => snapshot.docs.length);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +68,26 @@ class DashboardUI extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                             )),
                             SizedBox(height: screenHeight * 0.01),
-                            const Text('0', style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w700,
-                            )),
+                            StreamBuilder<int>(
+                              stream: _getCount('users'),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Text('${snapshot.data}', style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w700,
+                                  ));
+                                } else {
+                                  return const Text('0', style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w700,
+                                  ));
+                                }
+                              },
+                            ),
                           ],
                         ),
                       ),
@@ -94,12 +117,26 @@ class DashboardUI extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                             )),
                             SizedBox(height: screenHeight * 0.01),
-                            const Text('0', style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w700,
-                            )),
+                            StreamBuilder<int>(
+                              stream: _getCount('kids'),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Text('${snapshot.data}', style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w700,
+                                  ));
+                                } else {
+                                  return const Text('0', style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w700,
+                                  ));
+                                }
+                              },
+                            ),
                           ],
                         ),
                       ),
@@ -128,20 +165,33 @@ class DashboardUI extends StatelessWidget {
                           children: [
                             const Icon(Icons.file_copy, color: Colors.white, size: 50),
                             SizedBox(height: screenHeight * 0.01),
-                            const Text('ATTENDANCE LOGS', style:
-                            TextStyle(
+                            const Text('ATTENDANCE LOGS', style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,
                               fontFamily: 'Lato',
                               fontWeight: FontWeight.w700,
                             )),
                             SizedBox(height: screenHeight * 0.01),
-                            const Text('0', style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w700,
-                            )),
+                            StreamBuilder<int>(
+                              stream: _getCount('attendancecollection'),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Text('${snapshot.data}', style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w700,
+                                  ));
+                                } else {
+                                  return const Text('0', style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w700,
+                                  ));
+                                }
+                              },
+                            ),
                           ],
                         ),
                       ),
@@ -171,12 +221,26 @@ class DashboardUI extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                             )),
                             SizedBox(height: screenHeight * 0.01),
-                            const Text('0', style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w700,
-                            )),
+                            StreamBuilder<int>(
+                              stream: _getOfficerCount(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Text('${snapshot.data}', style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w700,
+                                  ));
+                                } else {
+                                  return const Text('0', style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w700,
+                                  ));
+                                }
+                              },
+                            ),
                           ],
                         ),
                       ),

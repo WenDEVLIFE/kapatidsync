@@ -235,6 +235,8 @@ class KidState extends State<AddAttendanceKidDialog> {
         ),
         TextButton(
           onPressed: () {
+
+            // TODO: Add a save the attendance on a excel file
             Navigator.pop(context);
           },
           child: const Text(
