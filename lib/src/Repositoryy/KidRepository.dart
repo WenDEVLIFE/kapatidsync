@@ -26,7 +26,7 @@ class KidRepositoryImpl implements KidRepository {
           'Age': kidData['age'],
           'Gender': kidData['gender'],
           'Purok': kidData['purok'],
-          'Contact': kidData['contact'],
+          'PhoneNumber': kidData['contact'],
           'Birthdate': kidData['birthdate'],
           'Address': kidData['address'],
           'ParentName': kidData['parentName'],
@@ -61,7 +61,7 @@ class KidRepositoryImpl implements KidRepository {
       for (KidModel kid in selectedKids) {
         await attendanceDocRef.collection('KidCollection').add({
           'KidID': kid.id,
-          'FullName': kid.fullname,
+          'Name': kid.fullname,
           'Age': kid.age,
           'Gender': kid.gender,
           'Purok': kid.purok,
@@ -70,6 +70,7 @@ class KidRepositoryImpl implements KidRepository {
           'Address': kid.address,
           'ParentName': kid.parentName,
           'isAttended': kid.isSelected,
+          'registeredAt': Timestamp.now(),
         });
       }
     } catch (e) {

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../config/ColorUtils.dart';
 import '../model/AttendanceModel.dart';
 import '../widget/AlertDialogOptionWidget.dart';
+import 'KidAttendanceUI.dart';
 
 class AttendanceLogsUI extends StatelessWidget {
   const AttendanceLogsUI({super.key});
@@ -116,7 +117,9 @@ class AttendanceLogsUI extends StatelessWidget {
                                   IconButton(
                                     icon: const Icon(Icons.remove_red_eye, color: Colors.white),
                                     onPressed: () {
-                                      // Navigator.of(context).push(MaterialPageRoute(builder: (context) => KidDetailsUI(kid: user)));
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                        builder: (context) => KidCollectionUI(attendanceId: data.attendanceId),
+                                      ));
                                     },
                                   ),
                                   IconButton(

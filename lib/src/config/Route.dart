@@ -16,6 +16,5 @@ class RouteUtil {
     splashScreen: (context) => SplashUI(),
     loginScreen: (context) => const LoginUi(),
     userPage: (context) => BottomNavigationWidget(),
-    kidAttendance: (context) => KidAttendanceUI(),
   };
 }

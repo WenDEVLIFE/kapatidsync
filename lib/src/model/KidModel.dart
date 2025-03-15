@@ -32,7 +32,7 @@ class KidModel {
       age: doc['Age'],
       gender: doc['Gender'],
       address: doc['Address'],
-      phoneNumber: doc['Contact'],
+      phoneNumber: doc['PhoneNumber'],
       parentName: doc['ParentName'],
       purok: doc['Purok'],
       birthdate: doc['Birthdate'],
