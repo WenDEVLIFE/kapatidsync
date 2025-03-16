@@ -10,7 +10,6 @@ class MenuUI extends StatefulWidget {
 
   @override
   MenuUIState createState() => MenuUIState();
-
 }
 
 class MenuUIState extends State<MenuUI> {
@@ -63,7 +62,7 @@ class MenuUIState extends State<MenuUI> {
                         builder: (context, viewModel, child) {
                           return GestureDetector(
                             child: CircleAvatar(
-                              radius: screenHeight * 0.07,
+                              radius: screenHeight * 0.04,
                               backgroundColor: ColorUtils.primaryColor,
                               child: CircleAvatar(
                                 radius: screenHeight * 0.068,
@@ -74,52 +73,57 @@ class MenuUIState extends State<MenuUI> {
                         },
                       ),
                       SizedBox(width: screenWidth * 0.05),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Consumer<MenuViewModel>(
-                            builder: (context, viewModel, child) {
-                              return Text(
-                                viewModel.name,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontFamily: 'Lato',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              );
-                            },
-                          ),
-                          SizedBox(height: screenHeight * 0.01),
-                          Consumer<MenuViewModel>(
-                            builder: (context, viewModel, child) {
-                              return Text(
-                                viewModel.email,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: 'Lato',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              );
-                            },
-                          ),
-                          SizedBox(height: screenHeight * 0.01),
-                          Consumer<MenuViewModel>(
-                            builder: (context, viewModel, child) {
-                              return Text(
-                                viewModel.role,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: 'Lato',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              );
-                            },
-                          ),
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Consumer<MenuViewModel>(
+                              builder: (context, viewModel, child) {
+                                return Text(
+                                  viewModel.name,
+                                  style:  TextStyle(
+                                    color: Colors.white,
+                                    fontSize: screenHeight * 0.02,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                );
+                              },
+                            ),
+                            SizedBox(height: screenHeight * 0.01),
+                            Consumer<MenuViewModel>(
+                              builder: (context, viewModel, child) {
+                                return Text(
+                                  viewModel.email,
+                                  style:  TextStyle(
+                                    color: Colors.white,
+                                    fontSize: screenHeight * 0.02,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                );
+                              },
+                            ),
+                            SizedBox(height: screenHeight * 0.01),
+                            Consumer<MenuViewModel>(
+                              builder: (context, viewModel, child) {
+                                return Text(
+                                  viewModel.role,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: screenHeight * 0.02,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

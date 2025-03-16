@@ -5,6 +5,7 @@ import 'package:kapatidsync/src/ui/AttendanceLogsUI.dart';
 import 'package:kapatidsync/src/ui/DashboardUI.dart';
 import 'package:kapatidsync/src/ui/KidUI.dart';
 import 'package:kapatidsync/src/widget/AlertDialogOptionWidget.dart';
+import 'package:kapatidsync/src/widget/DrawerWidget.dart';
 import '../config/ColorUtils.dart';
 import '../ui/MenuUI.dart';
 import '../ui/UserUI.dart';
@@ -24,19 +25,12 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     const KidUI(),
     UserUI(),
     const AttendanceLogsUI(),
-    const MenuUI(),
   ];
 
   void _onItemTapped(int index) {
-    if (index == 3) {
-      // Handle logout action
-      print('Logout');
-
-    } else {
       setState(() {
         _selectedIndex = index;
       });
-    }
   }
 
   @override
@@ -63,18 +57,17 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
             icon: Icon(CupertinoIcons.doc_plaintext),
             label: 'Attendance Logs',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.list_bullet),
-            label: 'Menu',
-          ),
         ],
         onTap: _onItemTapped,
       ),
       tabBuilder: (BuildContext context, int index) {
         return CupertinoTabView(
           builder: (BuildContext context) {
-            return Center(
-              child: _widgetOptions.elementAt(index),
+            return Scaffold(
+              drawer: const DrawerWidget(),
+              body: Center(
+                child: _widgetOptions.elementAt(index),
+              ),
             );
           },
         );
