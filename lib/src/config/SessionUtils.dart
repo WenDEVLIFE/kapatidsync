@@ -8,6 +8,7 @@ class SessionUtils {
     prefs.setString('role', userInfo['role']);
     prefs.setString('name', userInfo['name']);
     prefs.setString('uid', userInfo['uid']);
+    prefs.setString('password', userInfo['password']);
     print('User Info Saved');
   }
 
@@ -18,7 +19,8 @@ class SessionUtils {
         'email': prefs.getString('email'),
         'role': prefs.getString('role'),
         'name': prefs.getString('name'),
-        'uid': prefs.getString('uid')
+        'uid': prefs.getString('uid'),
+        'password': prefs.getString('password')
       };
     }
     return null;
@@ -29,11 +31,17 @@ class SessionUtils {
     prefs.setString('email', email);
   }
 
+  Future<void> updatePassword(String password) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('password', password);
+  }
+
   Future<void> clearUserInfo() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('email');
     prefs.remove('role');
     prefs.remove('name');
     prefs.remove('uid');
+    prefs.remove('password');
   }
 }

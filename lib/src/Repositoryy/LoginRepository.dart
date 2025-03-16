@@ -37,6 +37,7 @@ class LoginRepositoryImpl extends LoginRepository {
           'role': role,
           'email': email,
           'name': name,
+          'password': password,
         };
       } else {
         // User document does not exist in Firestore

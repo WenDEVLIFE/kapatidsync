@@ -33,14 +33,14 @@ class MenuListWidget extends StatelessWidget {
                   onTap: () {
                     // Handle menu item tap
                     if (index == 0) {
-                      // Privacy Policy
-
+                      // Change Password
+                      executePassword(context);
                     } else if (index == 1) {
-                      // About Us
-
+                      // Terms and Conditions
+                      // Add navigation or action here
                     } else if (index == 2) {
                       // About Us
-
+                      // Add navigation or action here
                     } else if (index == 3) {
                       // Logout
                       showDialog(context: context, builder: (BuildContext context) {
@@ -48,7 +48,7 @@ class MenuListWidget extends StatelessWidget {
                           title: 'Logout',
                           content: 'Are you sure you want to logout?',
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, RouteUtil.loginScreen);
+                            Navigator.of(context, rootNavigator: true).pushReplacementNamed(RouteUtil.loginScreen);
                           },
                         ).build(context);
                       });
@@ -61,5 +61,10 @@ class MenuListWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void executePassword(BuildContext context) {
+    Navigator.pop(context);
+    Navigator.of(context).pushNamed(RouteUtil.changePassword);
   }
 }

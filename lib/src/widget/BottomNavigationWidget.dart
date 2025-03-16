@@ -28,9 +28,9 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   ];
 
   void _onItemTapped(int index) {
-      setState(() {
-        _selectedIndex = index;
-      });
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
@@ -38,8 +38,8 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         backgroundColor: ColorUtils.primaryColor,
-        activeColor: ColorUtils.accentColor, // Set the active color
-        inactiveColor: ColorUtils.secondaryColor, // Set the inactive color
+        activeColor: ColorUtils.accentColor,
+        inactiveColor: ColorUtils.secondaryColor,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.home),
@@ -61,15 +61,13 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
         onTap: _onItemTapped,
       ),
       tabBuilder: (BuildContext context, int index) {
-        return CupertinoTabView(
-          builder: (BuildContext context) {
-            return Scaffold(
-              drawer: const DrawerWidget(),
-              body: Center(
-                child: _widgetOptions.elementAt(index),
-              ),
-            );
-          },
+        return CupertinoPageScaffold(
+          child: Scaffold(
+            drawer: const DrawerWidget(),
+            body: Center(
+              child: _widgetOptions.elementAt(index),
+            ),
+          ),
         );
       },
     );

@@ -11,19 +11,16 @@ import 'package:kapatidsync/src/services/FirebaseService.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  runApp(const MyApp());
   WidgetsFlutterBinding.ensureInitialized();
-
   await FirebaseServices.runFirebase();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => SplashViewModel()),
@@ -39,7 +36,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: RouteUtil.splashScreen,
         routes: RouteUtil.routes,
-      )
+      ),
     );
   }
 }

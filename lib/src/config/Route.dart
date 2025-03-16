@@ -8,13 +8,12 @@ import '../ui/KidAttendanceUI.dart';
 
 class RouteUtil {
 
-  static const String splashScreen ='/splashScreen';
-  static const String loginScreen ='/loginScreen';
-  static const String userPage ='/userPage';
-  static const String kidAttendance ='/kidAttendance';
-  static const String changePassword ='/changePassword';
+  static const String splashScreen = '/splashScreen';
+  static const String loginScreen = '/loginScreen';
+  static const String userPage = '/userPage';
+  static const String changePassword = '/changePassword';
 
-  static Map <String, WidgetBuilder> routes = {
+  static Map<String, WidgetBuilder> routes = {
     splashScreen: (context) => SplashUI(),
     loginScreen: (context) => const LoginUi(),
     userPage: (context) => BottomNavigationWidget(),
