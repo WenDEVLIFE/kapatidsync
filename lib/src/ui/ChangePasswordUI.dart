@@ -15,8 +15,6 @@ class ChangePasswordUI extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
-    TextEditingController passwordController = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorUtils.primaryColor,
@@ -27,14 +25,14 @@ class ChangePasswordUI extends StatelessWidget {
           fontWeight: FontWeight.w700,
         )),
       ),
-      backgroundColor: ColorUtils.primaryColor,
+      backgroundColor: ColorUtils.secondaryColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('Enter the new password',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 30,
                 fontFamily: 'Lato',
                 fontWeight: FontWeight.w700,
@@ -44,43 +42,49 @@ class ChangePasswordUI extends StatelessWidget {
             Container(
               width: screenWidth * 0.8,
               child: TextField(
-                controller: passwordController,
-                style: const TextStyle(color: Colors.white),
+                controller: viewModel.passwordController,
+                style: const TextStyle(color: ColorUtils.primaryColor),
                 obscureText: true,
-                decoration: const InputDecoration(
-                  hintText: 'New Password',
-                  hintStyle: TextStyle(color: Colors.white,
-                      fontFamily: 'Lato',
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    icon: Icon(viewModel.isObscureText ? Icons.visibility_off : Icons.visibility),
+                    color: ColorUtils.primaryColor,
+                    onPressed: () {
+                      viewModel.toggleObscureText();
+                    },
                   ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
+                  hintText: 'New Password',
+                  hintStyle: const TextStyle(color: ColorUtils.primaryColor,
+                      fontFamily: 'Lato',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400),
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: ColorUtils.primaryColor),
+                  ),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: ColorUtils.primaryColor),
                   ),
                 ),
               ),
             ),
             SizedBox(height: screenHeight * 0.02),
             Container(
-              width: screenWidth * 0.8,
-              height: screenHeight * 0.08,
+              width: screenWidth * 0.7,
+              height: screenHeight * 0.07,
               child: ElevatedButton(
                 onPressed: () {
-                  viewModel.changePassword(passwordController.text);
+                  viewModel.changePassword();
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtils.accentColor,
+                  backgroundColor: ColorUtils.primaryColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.3, vertical: screenHeight * 0.01),
                 ),
                 child: const Text('Change Password',
                   style: TextStyle(
-                    color: ColorUtils.secondaryColor,
-                    fontSize: 20,
+                    color: Colors.white, // Ensure the text color is white
+                    fontSize:14,
                     fontFamily: 'Lato',
                     fontWeight: FontWeight.w700,
                   ),
