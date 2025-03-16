@@ -34,11 +34,11 @@ class UserViewModel extends ChangeNotifier {
 
   Stream<List<UserModel>> get userStream => userRepository.getUsers();
 
-  var role = ['Admin', 'Chruch Officer'];
-  var selectedRole ='Admin';
+  var role = ['Admin', 'Church Officer'];
+  var selectedRole = 'Admin';
 
-  // intialize
-  UserViewModel  () {
+  // initialize
+  UserViewModel() {
     _listenToUserStream();
   }
 
@@ -68,7 +68,7 @@ class UserViewModel extends ChangeNotifier {
   }
 
   // clear data
-  void clearData(){
+  void clearData() {
     emailController.clear();
     nameController.clear();
     passwordController.clear();
@@ -78,73 +78,75 @@ class UserViewModel extends ChangeNotifier {
 
   // Add user listener
   Future<void> addUser() async {
-
     bool checkEmail = await checkDataUtils.validateEmail(emailController.text);
     bool checkPassword = await checkDataUtils.checkPassword(passwordController.text, confirmPasswordController.text);
     bool checkPasswordComplexity = await checkDataUtils.checkPasswordComplexity(passwordController.text);
     bool checkIfUserExist = await checkDataUtils.checkIfUserExist(emailController.text);
     bool checkIfNameExist = await checkDataUtils.checkIfNameExist(nameController.text);
 
-    if (emailController.text.isEmpty){
+    if (emailController.text.isEmpty) {
       print('Email is empty');
       FlutterToastWidget().showMessage(Colors.red, 'Email is empty');
+      return;
     }
 
-    if (passwordController.text.isEmpty){
+    if (passwordController.text.isEmpty) {
       print('Password is empty');
       FlutterToastWidget().showMessage(Colors.red, 'Password is empty');
+      return;
     }
 
-    if (confirmPasswordController.text.isEmpty){
+    if (confirmPasswordController.text.isEmpty) {
       print('Confirm Password is empty');
       FlutterToastWidget().showMessage(Colors.red, 'Confirm Password is empty');
+      return;
     }
 
-    if (nameController.text.isEmpty){
+    if (nameController.text.isEmpty) {
       print('Name is empty');
       FlutterToastWidget().showMessage(Colors.red, 'Name is empty');
+      return;
     }
 
-    if (checkEmail == false){
+    if (!checkEmail) {
       print('Email is invalid');
       FlutterToastWidget().showMessage(Colors.red, 'Email is invalid');
+      return;
     }
 
-    if (checkPassword == false){
+    if (!checkPassword) {
       print('Password does not match');
       FlutterToastWidget().showMessage(Colors.red, 'Password does not match');
-
+      return;
     }
 
-    if (checkPasswordComplexity == false){
+    if (!checkPasswordComplexity) {
       print('Password is not complex');
       FlutterToastWidget().showMessage(Colors.red, 'Password is not complex');
+      return;
     }
 
-    if (checkIfUserExist == false){
-      print('Email already exist');
-      FlutterToastWidget().showMessage(Colors.red, 'Email already exist');
-
+    if (!checkIfUserExist) {
+      print('Email already exists');
+      FlutterToastWidget().showMessage(Colors.red, 'Email already exists');
+      return;
     }
 
-    if (checkIfNameExist == false){
-      print('Name already exist');
-      FlutterToastWidget().showMessage(Colors.red, 'Name already exist');
+    if (!checkIfNameExist) {
+      print('Name already exists');
+      FlutterToastWidget().showMessage(Colors.red, 'Name already exists');
+      return;
     }
 
-    else{
+    var userdata = {
+      'email': emailController.text,
+      'name': nameController.text,
+      'role': selectedRole,
+      'password': passwordController.text,
+    };
 
-      var userdata = {
-        'email': emailController.text,
-        'name': nameController.text,
-        'role': selectedRole,
-        'password': passwordController.text,
-      };
-
-      await userRepository.addUser(userdata);
-      clearData();
-    }
-
+    await userRepository.addUser(userdata);
+    clearData();
   }
 
   // get user
@@ -154,8 +156,6 @@ class UserViewModel extends ChangeNotifier {
       notifyListeners();
     });
   }
-
-      // TODO: Add user to firebase
 
   // Filtered Search
   void filterUser(String query) {
@@ -171,30 +171,30 @@ class UserViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-
   // Delete user
-  Future <void> deleteUser(String uid, BuildContext context) async {
+  Future<void> deleteUser(String uid, BuildContext context) async {
     SessionUtils sessionUtils = SessionUtils();
 
     var user = await sessionUtils.getUserInfo();
     var userID = user?['uid'];
     ProgressDialog pd = ProgressDialog(context: context);
-    pd.show(max: 100, msg: 'Deleting User' , surfaceTintColor: ColorUtils.primaryColor, barrierColor: Colors.black.withOpacity(0.5));
+    pd.show(
+        max: 100,
+        msg: 'Deleting User',
+        surfaceTintColor: ColorUtils.primaryColor,
+        barrierColor: Colors.black.withOpacity(0.5));
 
     try {
-       if (userID == uid){
-         FlutterToastWidget().showMessage(Colors.red, 'You cannot delete your own account');
-       }
-       else{
-         await userRepository.deleteUser(uid);
-         FlutterToastWidget().showMessage(Colors.green, 'User deleted successfully');
-       }
+      if (userID == uid) {
+        FlutterToastWidget().showMessage(Colors.red, 'You cannot delete your own account');
+      } else {
+        await userRepository.deleteUser(uid);
+        FlutterToastWidget().showMessage(Colors.green, 'User deleted successfully');
+      }
     } catch (e) {
       print(e);
-    }
-    finally {
+    } finally {
       pd.close();
     }
   }
-
 }

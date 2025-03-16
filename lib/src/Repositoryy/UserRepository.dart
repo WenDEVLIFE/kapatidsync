@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:kapatidsync/src/config/ColorUtils.dart';
 import 'package:kapatidsync/src/model/UserModel.dart';
+import 'package:kapatidsync/src/widget/FlutterToastWidget.dart';
 
 abstract class UserRepository {
  Future<void> addUser(Map<String, dynamic> userdata);
@@ -31,6 +34,8 @@ class UserRepositoryImpl implements UserRepository {
       'Name': name,
       'Role': role,
     });
+
+    FlutterToastWidget().showMessage(ColorUtils.primaryColor, 'User added successfully');
 
   }
 
