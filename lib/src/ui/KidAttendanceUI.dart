@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
-
 import '../ViewModel/AttendanceViewModel.dart';
 import '../config/ColorUtils.dart';
 import '../model/KidModelII.dart';
 import '../widget/AddAttendanceKidDialog.dart';
 import '../widget/AlertDialogOptionWidget.dart';
+import '../services/ExcelService.dart';
 
 class KidCollectionUI extends StatefulWidget {
   final String attendanceId;
@@ -255,8 +255,15 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
               fontFamily: 'SmoochSans',
               color: Colors.white,
             ),
-            onTap: () {
-
+            onTap: () async {
+              final viewModel = Provider.of<AttendanceViewModel>(context, listen: false);
+              final excelService = ExcelService();
+              await excelService.saveKidCollectionToExcel(viewModel.getKidCollection, widget.date);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Attendance saved to Excel'),
+                ),
+              );
             },
           ),
         ],
