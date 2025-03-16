@@ -33,18 +33,6 @@ class MenuUIState extends State<MenuUI> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Menu',
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: 'SmoochSans',
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
-        ),
-        backgroundColor: ColorUtils.primaryColor,
-      ),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +53,7 @@ class MenuUIState extends State<MenuUI> {
                           return GestureDetector(
                             child: CircleAvatar(
                               radius: screenHeight * 0.04,
-                              backgroundColor: ColorUtils.primaryColor,
+                              backgroundColor: ColorUtils.secondaryColor,
                               child: CircleAvatar(
                                 radius: screenHeight * 0.068,
                                 backgroundImage: AssetImage(viewModel.profilepath),
@@ -85,7 +73,7 @@ class MenuUIState extends State<MenuUI> {
                                 return Text(
                                   viewModel.name,
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: ColorUtils.secondaryColor,
                                     fontSize: screenHeight * 0.02,
                                     fontFamily: 'Lato',
                                     fontWeight: FontWeight.w600,
@@ -100,7 +88,7 @@ class MenuUIState extends State<MenuUI> {
                                 return Text(
                                   viewModel.email,
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: ColorUtils.secondaryColor,
                                     fontSize: screenHeight * 0.02,
                                     fontFamily: 'Lato',
                                     fontWeight: FontWeight.w500,
@@ -115,7 +103,7 @@ class MenuUIState extends State<MenuUI> {
                                 return Text(
                                   viewModel.role,
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: ColorUtils.secondaryColor,
                                     fontSize: screenHeight * 0.02,
                                     fontFamily: 'Lato',
                                     fontWeight: FontWeight.w500,
@@ -132,11 +120,15 @@ class MenuUIState extends State<MenuUI> {
                 ],
               ),
             ),
-            SizedBox.fromSize(size: Size.fromHeight(screenHeight * 0.02)),
             Expanded(
-              child: MenuListWidget(
-                onItemSelected: widget.onItemSelected,
-                role: viewModel.role,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: ColorUtils.primaryColor,
+                ),
+                child: MenuListWidget(
+                  onItemSelected: widget.onItemSelected,
+                  role: viewModel.role,
+                ),
               ),
             ),
           ],

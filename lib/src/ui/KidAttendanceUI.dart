@@ -225,18 +225,18 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
       ),
       floatingActionButton: SpeedDial(
         animatedIcon: AnimatedIcons.menu_close,
-        animatedIconTheme: const IconThemeData(size: 22.0),
+        animatedIconTheme: const IconThemeData(size: 22.0, color: ColorUtils.secondaryColor),
         backgroundColor: ColorUtils.primaryColor,
         children: [
           SpeedDialChild(
             child: const Icon(Icons.add, color: ColorUtils.secondaryColor,),
             backgroundColor: ColorUtils.primaryColor,
-            label: 'Add Kid',
+            label: 'Add Kid to Attendance',
             labelStyle: const TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.w800,
               fontFamily: 'SmoochSans',
-              color: Colors.white,
+              color: Colors.black,
             ),
             onTap: () {
               showDialog(context: context, builder: (BuildContext context) {
@@ -253,7 +253,7 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
               fontSize: 18.0,
               fontWeight: FontWeight.w800,
               fontFamily: 'SmoochSans',
-              color: Colors.white,
+              color: Colors.black,
             ),
             onTap: () async {
               final viewModel = Provider.of<AttendanceViewModel>(context, listen: false);

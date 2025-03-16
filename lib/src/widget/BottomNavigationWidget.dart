@@ -70,7 +70,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
               child: _widgetOptions.elementAt(_selectedIndex),
             ),
             bottomNavigationBar: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: ColorUtils.primaryColor, // Ensure the background color applies
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15),
