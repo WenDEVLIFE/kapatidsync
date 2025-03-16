@@ -19,6 +19,8 @@ dependencies:
   sn_progress_dialog: ^1.1.4
   shared_preferences: ^2.3.2
   flutter_speed_dial: ^4.3.0
+  excel: ^2.0.6
+  path_provider: ^2.0.11
 
 dev_dependencies:
   flutter_test:
