@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:kapatidsync/src/ui/ChangePasswordUI.dart';
 import 'package:kapatidsync/src/ui/LoginUI.dart';
 import 'package:kapatidsync/src/ui/SplashUI.dart';
 import 'package:kapatidsync/src/widget/BottomNavigationWidget.dart';
@@ -11,10 +12,12 @@ class RouteUtil {
   static const String loginScreen ='/loginScreen';
   static const String userPage ='/userPage';
   static const String kidAttendance ='/kidAttendance';
+  static const String changePassword ='/changePassword';
 
   static Map <String, WidgetBuilder> routes = {
     splashScreen: (context) => SplashUI(),
     loginScreen: (context) => const LoginUi(),
     userPage: (context) => BottomNavigationWidget(),
+    changePassword: (context) => const ChangePasswordUI(),
   };
 }
