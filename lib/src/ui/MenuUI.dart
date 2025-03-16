@@ -6,7 +6,9 @@ import '../config/ColorUtils.dart';
 import '../widget/MenuListWidget.dart';
 
 class MenuUI extends StatefulWidget {
-  const MenuUI({super.key});
+  final Function(int) onItemSelected;
+
+  const MenuUI({super.key, required this.onItemSelected});
 
   @override
   MenuUIState createState() => MenuUIState();
@@ -82,7 +84,7 @@ class MenuUIState extends State<MenuUI> {
                               builder: (context, viewModel, child) {
                                 return Text(
                                   viewModel.name,
-                                  style:  TextStyle(
+                                  style: TextStyle(
                                     color: Colors.white,
                                     fontSize: screenHeight * 0.02,
                                     fontFamily: 'Lato',
@@ -97,7 +99,7 @@ class MenuUIState extends State<MenuUI> {
                               builder: (context, viewModel, child) {
                                 return Text(
                                   viewModel.email,
-                                  style:  TextStyle(
+                                  style: TextStyle(
                                     color: Colors.white,
                                     fontSize: screenHeight * 0.02,
                                     fontFamily: 'Lato',
@@ -132,7 +134,10 @@ class MenuUIState extends State<MenuUI> {
             ),
             SizedBox.fromSize(size: Size.fromHeight(screenHeight * 0.02)),
             Expanded(
-              child: MenuListWidget(),
+              child: MenuListWidget(
+                onItemSelected: widget.onItemSelected,
+                role: viewModel.role,
+              ),
             ),
           ],
         ),

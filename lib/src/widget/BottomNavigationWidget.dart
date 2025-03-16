@@ -8,7 +8,6 @@ import 'package:kapatidsync/src/ui/KidUI.dart';
 import 'package:kapatidsync/src/widget/AlertDialogOptionWidget.dart';
 import 'package:kapatidsync/src/widget/DrawerWidget.dart';
 import '../config/ColorUtils.dart';
-import '../ui/MenuUI.dart';
 import '../ui/UserUI.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
@@ -47,6 +46,13 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     });
   }
 
+  void _onMenuItemSelected(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    Navigator.pop(context); // Close the drawer
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<String>(
@@ -58,42 +64,53 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
           var role = snapshot.data!;
-          return CupertinoTabScaffold(
-            tabBar: CupertinoTabBar(
-              backgroundColor: ColorUtils.primaryColor,
-              activeColor: ColorUtils.accentColor,
-              inactiveColor: ColorUtils.secondaryColor,
-              items: <BottomNavigationBarItem>[
-                const BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.home),
-                  label: 'Home',
-                ),
-                const BottomNavigationBarItem(
-                  icon: Icon(Icons.document_scanner),
-                  label: 'Kids',
-                ),
-                if (role == 'Admin')
-                  const BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.person),
-                    label: 'Users',
-                  ),
-                const BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.doc_plaintext),
-                  label: 'Attendance Logs',
-                ),
-              ],
-              onTap: _onItemTapped,
+          return Scaffold(
+            drawer: DrawerWidget(onItemSelected: _onMenuItemSelected),
+            body: Center(
+              child: _widgetOptions.elementAt(_selectedIndex),
             ),
-            tabBuilder: (BuildContext context, int index) {
-              return CupertinoPageScaffold(
-                child: Scaffold(
-                  drawer: const DrawerWidget(),
-                  body: Center(
-                    child: _widgetOptions.elementAt(index),
-                  ),
+            bottomNavigationBar: Container(
+              decoration: BoxDecoration(
+                color: ColorUtils.primaryColor, // Ensure the background color applies
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
                 ),
-              );
-            },
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10,
+                  ),
+                ],
+              ),
+              child: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                backgroundColor: Colors.transparent, // Transparent to use container color
+                selectedItemColor: ColorUtils.accentColor,
+                unselectedItemColor: ColorUtils.secondaryColor,
+                items: <BottomNavigationBarItem>[
+                  const BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.home),
+                    label: 'Home',
+                  ),
+                  const BottomNavigationBarItem(
+                    icon: Icon(Icons.document_scanner),
+                    label: 'Kids',
+                  ),
+                  if (role == 'Admin')
+                    const BottomNavigationBarItem(
+                      icon: Icon(CupertinoIcons.person),
+                      label: 'Users',
+                    ),
+                  const BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.doc_plaintext),
+                    label: 'Attendance Logs',
+                  ),
+                ],
+                currentIndex: _selectedIndex,
+                onTap: _onItemTapped,
+              ),
+            ),
           );
         }
       },

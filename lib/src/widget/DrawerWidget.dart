@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/ui/MenuUI.dart';
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({super.key});
+  final Function(int) onItemSelected;
+
+  const DrawerWidget({super.key, required this.onItemSelected});
 
   @override
   Widget build(BuildContext context) {
-    return const Drawer(
-      child: MenuUI(),
+    return Drawer(
+      child: MenuUI(onItemSelected: onItemSelected),
     );
   }
 }

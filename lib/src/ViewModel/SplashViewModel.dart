@@ -5,7 +5,7 @@ import '../config/Route.dart';
 
 class SplashViewModel extends ChangeNotifier {
 
-   bool loading = false;
+  bool loading = false;
 
   bool get isLoading => loading;
 
@@ -15,7 +15,7 @@ class SplashViewModel extends ChangeNotifier {
     loading = true;
     notifyListeners();
 
-    var userdata = sessionUtils.getUserInfo();
+    var userdata = await sessionUtils.getUserInfo();
 
     await Future.delayed(const Duration(seconds: 5));
 
@@ -26,6 +26,6 @@ class SplashViewModel extends ChangeNotifier {
       } else {
         Navigator.pushReplacementNamed(context, RouteUtil.loginScreen);
       }
-       }
+    }
   }
 }

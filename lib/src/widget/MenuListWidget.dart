@@ -1,17 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kapatidsync/src/config/SessionUtils.dart';
 import 'package:kapatidsync/src/widget/AlertDialogOptionWidget.dart';
 
 import '../config/Route.dart';
 import '../model/MenuItem.dart';
 
 class MenuListWidget extends StatelessWidget {
-  final List<MenuItem> menuItems = [
-    MenuItem(icon: Icons.password, title: 'Change Password'),
-    MenuItem(icon: Icons.check, title: 'Terms and Conditions'),
-    MenuItem(icon: Icons.info_outline, title: 'About Us'),
-    MenuItem(icon: Icons.logout, title: 'Logout'),
-  ];
+  final String role;
+  final Function(int) onItemSelected;
+  late final List<MenuItem> menuItems;
+
+  MenuListWidget({super.key, required this.onItemSelected, required this.role}) {
+    menuItems = [
+      MenuItem(icon: Icons.home, title: 'Dashboard'),
+      MenuItem(icon: Icons.document_scanner, title: 'Kids'),
+      if (role == 'Admin') MenuItem(icon: Icons.person, title: 'Users'),
+      MenuItem(icon: CupertinoIcons.doc_plaintext, title: 'Attendance Logs'),
+      MenuItem(icon: Icons.lock, title: 'Change Password'),
+      MenuItem(icon: Icons.logout, title: 'Logout'),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,34 +33,37 @@ class MenuListWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ListTile(
                   leading: Icon(menuItems[index].icon, color: Colors.black, size: 22,),
-                  title: Text(menuItems[index].title,
-                    style: const TextStyle(fontSize: 18,
+                  title: Text(
+                    menuItems[index].title,
+                    style: const TextStyle(
+                      fontSize: 18,
                       fontFamily: 'SmoochSans',
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   onTap: () {
-                    // Handle menu item tap
-                    if (index == 0) {
-                      // Change Password
+                    if (menuItems[index].title == 'Change Password') {
                       executePassword(context);
-                    } else if (index == 1) {
-                      // Terms and Conditions
-                      // Add navigation or action here
-                    } else if (index == 2) {
-                      // About Us
-                      // Add navigation or action here
-                    } else if (index == 3) {
-                      // Logout
-                      showDialog(context: context, builder: (BuildContext context) {
-                        return AlertDialogOptionWidget(
-                          title: 'Logout',
-                          content: 'Are you sure you want to logout?',
-                          onPressed: () {
-                            Navigator.of(context, rootNavigator: true).pushReplacementNamed(RouteUtil.loginScreen);
-                          },
-                        ).build(context);
-                      });
+                    } else if (menuItems[index].title == 'Logout') {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialogOptionWidget(
+                            title: 'Logout',
+                            content: 'Are you sure you want to logout?',
+                            onPressed: () {
+                            SessionUtils sessionUtils = SessionUtils();
+                            sessionUtils.clearUserInfo();
+                              Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+                                RouteUtil.loginScreen,
+                                    (Route<dynamic> route) => false,
+                              );
+                            },
+                          ).build(context);
+                        },
+                      );
+                    } else {
+                      onItemSelected(index);
                     }
                   },
                 );
