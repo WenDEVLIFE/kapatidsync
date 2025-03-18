@@ -33,7 +33,7 @@ class AddKidDialog extends StatelessWidget {
             CustomTextField(
                 controller: viewModel.nameController,
                 screenHeight: screenHeight,
-                hintText: 'Purok Number',
+                hintText: 'Name',
                 fontSize: 20,
                 keyboardType: TextInputType.text
             ),
