@@ -161,11 +161,11 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
                   children: [
                     CustomText(fontSize: 16,
                         text: 'Present: ${viewModel.presentPercentage.toStringAsFixed(2)}%',
-                        color: ColorUtils.secondaryColor
+                        color: ColorUtils.primaryColor
                     ),
                     CustomText(fontSize: 16,
                         text: 'Absent: ${viewModel.absentPercentage.toStringAsFixed(2)}%',
-                        color: ColorUtils.secondaryColor
+                        color: ColorUtils.accentColor
                     ),
                   ],
                 ),
