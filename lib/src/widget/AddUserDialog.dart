@@ -5,6 +5,11 @@ import 'package:kapatidsync/src/config/ColorUtils.dart';
 import 'package:provider/provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
+import 'CustomPasswordTextField.dart';
+import 'CustomText.dart';
+import 'CustomTextButton.dart';
+import 'CustomTextField.dart';
+
 class AddUserDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -15,116 +20,42 @@ class AddUserDialog extends StatelessWidget {
 
     return AlertDialog(
       backgroundColor: ColorUtils.primaryColor,
-      title: const Text("Add User"
-      ,style: TextStyle(
-        color: Colors.white,
-        fontSize: 20,
-        fontFamily: 'Lato',
-        fontWeight: FontWeight.w700,
-      )
-    ),
+      title: const CustomText(fontSize: 20,
+          text: 'Create User',
+          color: ColorUtils.secondaryColor
+      ),
       content: SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(height: screenHeight * 0.02),
-            Container(
-              width: screenWidth * 0.8,
-              child: TextField(
-               controller: viewModel.emailController,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  hintText: 'Email',
-                  hintStyle: TextStyle(color: Colors.white ,
-                      fontFamily: 'Lato' ,
-                      fontSize: 20 ,
-                      fontWeight: FontWeight.w400),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                ),
-              ),
+            CustomTextField(
+                controller: viewModel.emailController,
+                screenHeight: screenHeight,
+                hintText: 'Email',
+                fontSize: 20,
+                keyboardType: TextInputType.text
             ),
             SizedBox(height: screenHeight * 0.02),
-            Container(
-              width: screenWidth * 0.8,
-              child: TextField(
+            CustomTextField(
                 controller: viewModel.nameController,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  hintText: 'Name',
-                  hintStyle: TextStyle(color: Colors.white ,
-                      fontFamily: 'Lato' ,
-                      fontSize: 20 ,
-                      fontWeight: FontWeight.w400),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                ),
-              ),
+                screenHeight: screenHeight,
+                hintText: 'Name',
+                fontSize: 20,
+                keyboardType: TextInputType.text
             ),
             SizedBox(height: screenHeight * 0.02),
-            Container(
-              width: screenWidth * 0.8,
-              child: TextField(
-                controller: viewModel.passwordController,
-                style: const TextStyle(color: Colors.white),
-                obscureText: viewModel.isObscure1,
-                decoration: InputDecoration(
-                  hintText: 'Password' ,
-                  hintStyle: const TextStyle(color: Colors.white ,
-                      fontFamily: 'Lato' ,
-                      fontSize: 20 ,
-                      fontWeight: FontWeight.w400),
-                  enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(viewModel.isObscure1 ? Icons.visibility : Icons.visibility_off),
-                    color: Colors.white,
-                    onPressed: () {
-                      viewModel.toggleObscureText1();
-                    },
-                  ),
-                ),
-              ),
+            CustomPasswordTextField(screenHeight: screenHeight,
+              hintText: 'Password',
+              controller: viewModel.passwordController,
+              isPasswordVisible: viewModel.isObscure1,
+              togglePasswordVisibility: viewModel.toggleObscureText1,
             ),
             SizedBox(height: screenHeight * 0.02),
-            Container(
-              width: screenWidth * 0.8,
-              child: TextField(
-                controller: viewModel.confirmPasswordController,
-                style: const TextStyle(color: Colors.white),
-                obscureText: viewModel.isObscure2,
-                decoration: InputDecoration(
-                  hintText: 'Confirm Password' ,
-                  hintStyle: const TextStyle(color: Colors.white ,
-                      fontFamily: 'Lato' ,
-                      fontSize: 20 ,
-                      fontWeight: FontWeight.w400),
-                  enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(viewModel.isObscure2 ? Icons.visibility : Icons.visibility_off),
-                    color: Colors.white,
-                    onPressed: () {
-                      viewModel.toggleObscureText2();
-                    },
-                  ),
-                ),
-              ),
+            CustomPasswordTextField(screenHeight: screenHeight,
+              hintText: 'Confirm Password',
+              controller: viewModel.confirmPasswordController,
+              isPasswordVisible: viewModel.isObscure2,
+              togglePasswordVisibility: viewModel.toggleObscureText2,
             ),
             SizedBox(height: screenHeight * 0.02),
             Container(
@@ -187,41 +118,33 @@ class AddUserDialog extends StatelessWidget {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () async {
-            ProgressDialog pd = ProgressDialog(context: context);
-            pd.show(max: 100, msg: 'Adding User');
+        CustomTextButton(
+            fontSize: 20,
+            text: 'Adding User',
+            color: Colors.white,
+            onPressed: () async {
+              ProgressDialog pd = ProgressDialog(context: context);
+              pd.show(max: 100, msg: 'Adding User');
 
-           try{
-             await viewModel.addUser();
-             if (context.mounted) {
-               Navigator.pop(context);
-             }
-           } catch (e){
-             print(e);
-           }finally{
-             pd.close();
-           }
-          },
-          child: Text("Add User",
-          style: const TextStyle(color: Colors.white ,
-              fontFamily: 'Lato' ,
-              fontSize: 20 ,
-              fontWeight: FontWeight.w400
-          ),
-          ),
+              try{
+                await viewModel.addUser();
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
+              } catch (e){
+                print(e);
+              }finally{
+                pd.close();
+              }
+            }
         ),
-        TextButton(
-          onPressed: (){
-           Navigator.pop(context);
-          },
-          child: Text("Cancel",
-            style: const TextStyle(color: Colors.white ,
-                fontFamily: 'Lato' ,
-                fontSize: 20 ,
-                fontWeight: FontWeight.w400
-            ),
-          ),
+        CustomTextButton(
+            fontSize: 20,
+            text: 'Cancel',
+            color: Colors.white,
+            onPressed: () async {
+              Navigator.pop(context);
+            }
         ),
       ],
 

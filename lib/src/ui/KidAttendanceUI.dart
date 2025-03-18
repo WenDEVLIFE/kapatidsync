@@ -8,6 +8,7 @@ import '../model/KidModelII.dart';
 import '../widget/AddAttendanceKidDialog.dart';
 import '../widget/AlertDialogOptionWidget.dart';
 import '../services/ExcelService.dart';
+import '../widget/CustomText.dart';
 
 class KidCollectionUI extends StatefulWidget {
   final String attendanceId;
@@ -36,14 +37,9 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorUtils.primaryColor,
-        title: Text(
-          'Attendance Logs for ${widget.date}',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontFamily: 'Lato',
-            fontWeight: FontWeight.w700,
-          ),
+        title: CustomText(fontSize: 18,
+            text:      'Attendance Logs for ${widget.date}',
+            color: ColorUtils.secondaryColor
         ),
       ),
       body: Column(
@@ -91,14 +87,9 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
               builder: (context, viewModel, child) {
                 if (viewModel.getKidCollection.isEmpty) {
                   return Center(
-                    child: Text(
-                      '${viewModel.attendanceSearchController.text} not found',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                        fontFamily: 'SmoochSans',
-                        color: Colors.black,
-                      ),
+                    child:CustomText(fontSize: 18,
+                        text: '${viewModel.attendanceSearchController.text} not found',
+                        color: ColorUtils.secondaryColor
                     ),
                   );
                 } else {
@@ -109,63 +100,33 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
                       return Card(
                         color: ColorUtils.primaryColor,
                         child: ListTile(
-                          title: Text(
-                            kid.kidName,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w800,
-                              fontFamily: 'SmoochSans',
-                              color: Colors.white,
-                            ),
+                          title:  CustomText(fontSize: 18,
+                              text: kid.kidName,
+                              color: ColorUtils.secondaryColor
                           ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Age: ${kid.kidAge}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: 'SmoochSans',
-                                  color: Colors.white,
-                                ),
+                              CustomText(fontSize: 16,
+                                  text: 'Age: ${kid.kidAge}',
+                                  color: ColorUtils.secondaryColor
                               ),
-                              Text(
-                                'Gender: ${kid.kidGender}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: 'SmoochSans',
-                                  color: Colors.white,
-                                ),
+                              CustomText(fontSize: 16,
+                                  text:   'Gender: ${kid.kidGender}',
+                                  color: ColorUtils.secondaryColor
                               ),
-                              Text(
-                                'Purok: ${kid.kidPurok}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: 'SmoochSans',
-                                  color: Colors.white,
-                                ),
+                              CustomText(fontSize: 16,
+                                  text: 'Purok: ${kid.kidPurok}',
+                                  color: ColorUtils.secondaryColor
                               ),
-                              Text(
-                                kid.isPresent == 'Present' ? 'Present' : 'Absent',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: 'SmoochSans',
-                                  color: Colors.white,
-                                ),
+                              CustomText(fontSize: 16,
+                                  text: kid.isPresent == 'Present' ? 'Present' : 'Absent',
+                                  color: ColorUtils.secondaryColor
                               ),
-                              Text(
-                                kid.isPresent == 'Present' ? 'Time In: ${kid.kidTimeIn}' : '',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: 'SmoochSans',
-                                  color: Colors.white,
-                                ),
-                              )
+                              CustomText(fontSize: 16,
+                                  text: kid.isPresent == 'Present' ? 'Time In: ${kid.kidTimeIn}' : '',
+                                  color: ColorUtils.secondaryColor
+                              ),
                             ],
                           ),
                           trailing: IconButton(
@@ -198,23 +159,13 @@ class _KidCollectionUIState extends State<KidCollectionUI> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      'Present: ${viewModel.presentPercentage.toStringAsFixed(2)}%',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        fontFamily: 'SmoochSans',
-                        color: ColorUtils.primaryColor,
-                      ),
+                    CustomText(fontSize: 16,
+                        text: 'Present: ${viewModel.presentPercentage.toStringAsFixed(2)}%',
+                        color: ColorUtils.secondaryColor
                     ),
-                    Text(
-                      'Absent: ${viewModel.absentPercentage.toStringAsFixed(2)}%',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        fontFamily: 'SmoochSans',
-                        color: ColorUtils.accentColor,
-                      ),
+                    CustomText(fontSize: 16,
+                        text: 'Absent: ${viewModel.absentPercentage.toStringAsFixed(2)}%',
+                        color: ColorUtils.secondaryColor
                     ),
                   ],
                 ),

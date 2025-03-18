@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/ViewModel/LoginViewModel.dart';
+import 'package:kapatidsync/src/widget/CustomPasswordTextField.dart';
+import 'package:kapatidsync/src/widget/CustomText.dart';
 import 'package:provider/provider.dart';
 
 import '../config/ColorUtils.dart';
+import '../widget/CustomElevatedButton.dart';
+import '../widget/CustomTextField.dart';
 
 class LoginUi extends StatelessWidget {
   const LoginUi({super.key});
@@ -22,87 +26,34 @@ class LoginUi extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Text('Login',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontFamily: 'Lato',
-                  fontWeight: FontWeight.w700,
-                ),
+              const CustomText(fontSize: 30,
+                  text: 'Login',
+                  color: ColorUtils.secondaryColor
               ),
               SizedBox(height: screenHeight * 0.02),
-              Container(
-                width: screenWidth * 0.8,
-                child: TextField(
+              CustomTextField(
                   controller: viewModel.emailController,
-                  style: const TextStyle(color: Colors.white),
-                  decoration: const InputDecoration(
-                    hintText: 'Email',
-                    hintStyle: TextStyle(color: Colors.white ,
-                        fontFamily: 'Lato' ,
-                        fontSize: 20 ,
-                        fontWeight: FontWeight.w400),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                  ),
-                ),
+                  screenHeight: screenHeight,
+                  hintText: 'Purok Number',
+                  fontSize: 20,
+                  keyboardType: TextInputType.text
               ),
               SizedBox(height: screenHeight * 0.02),
-              Container(
-                width: screenWidth * 0.8,
-                child: TextField(
+              CustomPasswordTextField(screenHeight: screenHeight,
+                  hintText: 'Password',
                   controller: viewModel.passwordController,
-                  style: const TextStyle(color: Colors.white),
-                  obscureText: viewModel.isObscureText,
-                  decoration: InputDecoration(
-                    hintText: 'Password' ,
-                    hintStyle: const TextStyle(color: Colors.white ,
-                        fontFamily: 'Lato' ,
-                        fontSize: 20 ,
-                        fontWeight: FontWeight.w400),
-                    enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(viewModel.isObscureText ? Icons.visibility : Icons.visibility_off),
-                      color: Colors.white,
-                      onPressed: () {
-                        viewModel.toggleObscureText();
-                      },
-                    ),
-                  ),
-                ),
+                  isPasswordVisible: viewModel.isObscureText,
+                  togglePasswordVisibility: viewModel.toggleObscureText,
               ),
               SizedBox(height: screenHeight * 0.02),
-              ElevatedButton(
+              CustomElevatedButton(
+                screenWidth: screenWidth,
+                screenHeight: screenHeight,
                 onPressed: () {
-                  // Add your code here
                   viewModel.LoginNow(context);
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtils.accentColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.3, vertical: screenHeight * 0.01),
-                ),
-                child: const Text('Login',
-                  style: TextStyle(
-                    color: ColorUtils.secondaryColor,
-                    fontSize: 20,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                text: 'Login',
               ),
-
             ],
           ),
 

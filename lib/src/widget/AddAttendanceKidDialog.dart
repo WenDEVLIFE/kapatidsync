@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import '../model/KidModel.dart';
+import 'CustomText.dart';
+import 'CustomTextButton.dart';
 
 class AddAttendanceKidDialog extends StatefulWidget {
   final String attendanceId;
@@ -76,14 +78,10 @@ class KidState extends State<AddAttendanceKidDialog> {
                   items: isAttended.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem(
                       value: value,
-                      child: Text(
-                        value,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Lato',
+                      child:  CustomText(
                           fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                        ),
+                          text: value,
+                          color: ColorUtils.secondaryColor
                       ),
                     );
                   }).toList(),
@@ -104,14 +102,10 @@ class KidState extends State<AddAttendanceKidDialog> {
                     return isAttended.map<Widget>((String item) {
                       return Align(
                         alignment: Alignment.centerLeft,
-                        child: Text(
-                          item,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Lato',
+                        child:  CustomText(
                             fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                          ),
+                            text: item,
+                            color: ColorUtils.secondaryColor
                         ),
                       );
                     }).toList();
@@ -135,14 +129,10 @@ class KidState extends State<AddAttendanceKidDialog> {
                   items: viewModel.kids.map<DropdownMenuItem<String>>((KidModel kid) {
                     return DropdownMenuItem(
                       value: kid.fullname,
-                      child: Text(
-                        kid.fullname,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Lato',
+                      child:   CustomText(
                           fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                        ),
+                          text: kid.fullname,
+                          color: ColorUtils.secondaryColor
                       ),
                     );
                   }).toList(),
@@ -163,14 +153,10 @@ class KidState extends State<AddAttendanceKidDialog> {
                     return viewModel.kids.map<Widget>((KidModel kid) {
                       return Align(
                         alignment: Alignment.centerLeft,
-                        child: Text(
-                          kid.fullname,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Lato',
+                        child: CustomText(
                             fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                          ),
+                            text: kid.fullname,
+                            color: ColorUtils.secondaryColor
                         ),
                       );
                     }).toList();
@@ -210,42 +196,30 @@ class KidState extends State<AddAttendanceKidDialog> {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () async {
-            if (selectedKid != null) {
-              KidModel selectedKidModel = viewModel.kids.firstWhere((kid) => kid.fullname == selectedKid);
-              await viewModel.addKidToAttendance(
-                context,
-                widget.attendanceId,
-                selectedKidModel,
-                selectedTime,
-                selectedAttendance == 'Present',
-              );
+        CustomTextButton(
+            fontSize: 20,
+            text: 'Add Attendance',
+            color: Colors.white,
+            onPressed: () async {
+              if (selectedKid != null) {
+                KidModel selectedKidModel = viewModel.kids.firstWhere((kid) => kid.fullname == selectedKid);
+                await viewModel.addKidToAttendance(
+                  context,
+                  widget.attendanceId,
+                  selectedKidModel,
+                  selectedTime,
+                  selectedAttendance == 'Present',
+                );
+              }
             }
-          },
-          child: const Text(
-            "Add Attendance",
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Lato',
-              fontSize: 20,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
         ),
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text(
-            "Cancel",
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Lato',
-              fontSize: 20,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
+        CustomTextButton(
+            fontSize: 20,
+            text: 'Cancel',
+            color: Colors.white,
+            onPressed: () async {
+              Navigator.pop(context);
+            }
         ),
       ],
     );

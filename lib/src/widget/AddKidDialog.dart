@@ -3,8 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/ViewModel/KidViewModel.dart';
 import 'package:kapatidsync/src/ViewModel/UserViewModel.dart';
 import 'package:kapatidsync/src/config/ColorUtils.dart';
+import 'package:kapatidsync/src/widget/CustomDropdown.dart';
+import 'package:kapatidsync/src/widget/CustomTextField.dart';
 import 'package:provider/provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
+
+import 'CustomDatePicker.dart';
+import 'CustomText.dart';
+import 'CustomTextButton.dart';
 
 class AddKidDialog extends StatelessWidget {
   @override
@@ -16,262 +22,95 @@ class AddKidDialog extends StatelessWidget {
 
     return AlertDialog(
       backgroundColor: ColorUtils.primaryColor,
-      title: const Text("Add a Kid"
-          ,style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontFamily: 'Lato',
-            fontWeight: FontWeight.w700,
-          )
+      title:  const CustomText(fontSize: 20,
+          text: 'Create a kid',
+          color: ColorUtils.secondaryColor
       ),
       content: SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(height: screenHeight * 0.02),
-            Container(
-              width: screenWidth * 0.8,
-              child: TextField(
+            CustomTextField(
                 controller: viewModel.nameController,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  hintText: 'Full Name',
-                  hintStyle: TextStyle(color: Colors.white ,
-                      fontFamily: 'Lato' ,
-                      fontSize: 20 ,
-                      fontWeight: FontWeight.w400),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                ),
-              ),
+                screenHeight: screenHeight,
+                hintText: 'Purok Number',
+                fontSize: 20,
+                keyboardType: TextInputType.text
             ),
             SizedBox(height: screenHeight * 0.02),
-            Container(
-              width: screenWidth * 0.8,
-              child: TextField(
+            CustomTextField(
                 controller: viewModel.ageController,
-                keyboardType: TextInputType.number,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  hintText: 'Age',
-                  hintStyle: TextStyle(color: Colors.white ,
-                      fontFamily: 'Lato' ,
-                      fontSize: 20 ,
-                      fontWeight: FontWeight.w400),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                ),
-              ),
+                screenHeight: screenHeight,
+                hintText: 'Age',
+                fontSize: 20,
+                keyboardType: TextInputType.number
             ),
             SizedBox(height: screenHeight * 0.02),
-            Container(
-              width: screenWidth * 0.8,
-              child: TextField(
+            CustomTextField(
                 controller: viewModel.purokController,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  hintText: 'Purok Number',
-                  hintStyle: TextStyle(color: Colors.white ,
-                      fontFamily: 'Lato' ,
-                      fontSize: 20 ,
-                      fontWeight: FontWeight.w400),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                ),
-              ),
+                screenHeight: screenHeight,
+                hintText: 'Purok Number',
+                fontSize: 20,
+                keyboardType: TextInputType.text
             ),
             SizedBox(height: screenHeight * 0.02),
-            Container(
-              width: screenWidth * 0.8,
-              child: TextField(
+            CustomTextField(
                 controller: viewModel.addressController,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  hintText: 'Address',
-                  hintStyle: TextStyle(color: Colors.white ,
-                      fontFamily: 'Lato' ,
-                      fontSize: 20 ,
-                      fontWeight: FontWeight.w400),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                ),
-              ),
+                screenHeight: screenHeight,
+                hintText: 'Address',
+                fontSize: 20,
+                keyboardType: TextInputType.streetAddress
             ),
             SizedBox(height: screenHeight * 0.02),
-            Container(
-              width: screenWidth * 0.8,
-              child: TextField(
-                controller: viewModel.birthdateController,
-                readOnly: true,
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(1900),
-                    lastDate: DateTime(2100),
-                  );
-                  if (pickedDate != null) {
-                    viewModel.birthdateController.text = "${pickedDate.toLocal()}".split(' ')[0];
-                  }
-                },
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  hintText: 'BirthDate',
-                  hintStyle: TextStyle(color: Colors.white ,
-                      fontFamily: 'Lato' ,
-                      fontSize: 20 ,
-                      fontWeight: FontWeight.w400),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                ),
-              ),
+            CustomDatePicker(
+              screenWidth: screenWidth,
+              controller: viewModel.birthdateController,
+              hintText: 'BirthDate',
             ),
             SizedBox(height: screenHeight * 0.02),
-            Container(
-              width: screenWidth * 0.8,
-              child: TextField(
+            CustomTextField(
                 controller: viewModel.contactController,
-                keyboardType: TextInputType.number,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  hintText: 'Contact Number',
-                  hintStyle: TextStyle(color: Colors.white ,
-                      fontFamily: 'Lato' ,
-                      fontSize: 20 ,
-                      fontWeight: FontWeight.w400),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                ),
-              ),
+                screenHeight: screenHeight,
+                hintText: 'Contact Number',
+                fontSize: 20,
+                keyboardType: TextInputType.number
             ),
             SizedBox(height: screenHeight * 0.02),
-            Container(
-              width: screenWidth * 0.9,
-              height: screenHeight * 0.08,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-              ),
-              padding: const EdgeInsets.symmetric(horizontal:  10, vertical:  5),
-              child: Theme(
-                data: Theme.of(context).copyWith(
-                    canvasColor: ColorUtils.secondaryColor
-                ),
-                child: DropdownButton<String>(
-                  value: viewModel.selectedGender,
-                  items: viewModel.genderList.map<DropdownMenuItem<String>>((String value){
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: const TextStyle(color: Colors.white ,
-                            fontFamily: 'Lato' ,
-                            fontSize: 20 ,
-                            fontWeight: FontWeight.w400
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {
-                    viewModel.setGender(value);
-                  },
-                  dropdownColor: ColorUtils.primaryColor,
-                  iconEnabledColor: ColorUtils.accentColor,
-                  style:  const TextStyle(color: Colors.white ,
-                      fontFamily: 'Lato' ,
-                      fontSize: 20 ,
-                      fontWeight: FontWeight.w400
-                  ),
-                  selectedItemBuilder: (BuildContext context){
-                    return viewModel.genderList.map<Widget>((String item){
-                      return Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(item,
-                          style: const TextStyle(color: Colors.white ,
-                              fontFamily: 'Lato' ,
-                              fontSize: 20 ,
-                              fontWeight: FontWeight.w400
-                          ),
-                        ),
-                      );
-                    }).toList();
-                  },
-                  isExpanded: true,
-                  alignment: Alignment.bottomLeft,
-
-                ),
-              ),
+            CustomDropdown<String>(
+              screenWidth: screenWidth,
+              screenHeight: screenHeight,
+              selectedItem: viewModel.selectedGender,
+              itemList: viewModel.genderList,
+              onChanged: viewModel.onChanged,
+              itemLabel: (String value) => value,
             ),
             SizedBox(height: screenHeight * 0.02),
-            Container(
-              width: screenWidth * 0.8,
-              child: TextField(
+            CustomTextField(
                 controller: viewModel.parentNameController,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  hintText: 'Parent Name',
-                  hintStyle: TextStyle(color: Colors.white ,
-                      fontFamily: 'Lato' ,
-                      fontSize: 20 ,
-                      fontWeight: FontWeight.w400),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
+                screenHeight: screenHeight,
+                hintText: 'Parent Name',
+                fontSize: 20,
+                keyboardType: TextInputType.text
+            )
           ],
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () async {
-           await viewModel.addKidEvent(context);
-          },
-          child: const Text("Add Kid",
-            style: TextStyle(color: Colors.white ,
-                fontFamily: 'Lato' ,
-                fontSize: 20 ,
-                fontWeight: FontWeight.w400
-            ),
-          ),
+        CustomTextButton(
+            fontSize: 20,
+            text: 'Add Kid',
+            color: Colors.white,
+            onPressed: () async {
+              await viewModel.addKidEvent(context);
+            }
         ),
-        TextButton(
-          onPressed: (){
-            Navigator.pop(context);
-          },
-          child: const Text("Cancel",
-            style: TextStyle(color: Colors.white ,
-                fontFamily: 'Lato' ,
-                fontSize: 20 ,
-                fontWeight: FontWeight.w400
-            ),
-          ),
+        CustomTextButton(
+            fontSize: 20,
+            text: 'Cancel',
+            color: Colors.white,
+            onPressed: () async {
+              Navigator.pop(context);
+            }
         ),
       ],
     );

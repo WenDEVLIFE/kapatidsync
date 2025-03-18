@@ -21,6 +21,7 @@ class KidViewModel extends ChangeNotifier {
   var selectedGender = 'Male';
 
   List<KidModel> kids = [];
+  KidModel? selectedKid;
   List<KidModel> filteredKids = [];
 
   List<KidModel> get getKid => filteredKids;
@@ -156,5 +157,10 @@ class KidViewModel extends ChangeNotifier {
     } finally {
       pd.close();
     }
+  }
+
+  void onChanged(String? value) {
+    selectedGender = value!;
+    notifyListeners();
   }
 }
