@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/config/ColorUtils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:kapatidsync/src/widget/DashboardCard.dart';
 
 class DashboardUI extends StatelessWidget {
   const DashboardUI({super.key});
@@ -47,100 +48,18 @@ class DashboardUI extends StatelessWidget {
               children: [
                 SizedBox(width: screenWidth * 0.01),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Container(
-                      height: screenHeight * 0.2,
-                      decoration: BoxDecoration(
-                        color: ColorUtils.primaryColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.person, color: Colors.white, size: 50),
-                            SizedBox(height: screenHeight * 0.01),
-                            const Text('USER', style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w700,
-                            )),
-                            SizedBox(height: screenHeight * 0.01),
-                            StreamBuilder<int>(
-                              stream: _getCount('users'),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return Text('${snapshot.data}', style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.w700,
-                                  ));
-                                } else {
-                                  return const Text('0', style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.w700,
-                                  ));
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  child: DashboardCard(
+                    icon: Icons.person,
+                    label: 'USER',
+                    stream: _getCount('users'),
                   ),
                 ),
                 SizedBox(width: screenWidth * 0.01),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Container(
-                      height: screenHeight * 0.2,
-                      decoration: BoxDecoration(
-                        color: ColorUtils.primaryColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.group, color: Colors.white, size: 50),
-                            SizedBox(height: screenHeight * 0.01),
-                            const Text('KIDS', style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w700,
-                            )),
-                            SizedBox(height: screenHeight * 0.01),
-                            StreamBuilder<int>(
-                              stream: _getCount('kids'),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return Text('${snapshot.data}', style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.w700,
-                                  ));
-                                } else {
-                                  return const Text('0', style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.w700,
-                                  ));
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  child: DashboardCard(
+                    icon: Icons.group,
+                    label: 'KIDS',
+                    stream: _getCount('kids'),
                   ),
                 ),
                 SizedBox(width: screenWidth * 0.01),
@@ -151,100 +70,18 @@ class DashboardUI extends StatelessWidget {
               children: [
                 SizedBox(width: screenWidth * 0.01),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Container(
-                      height: screenHeight * 0.2,
-                      decoration: BoxDecoration(
-                        color: ColorUtils.primaryColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.file_copy, color: Colors.white, size: 50),
-                            SizedBox(height: screenHeight * 0.01),
-                            const Text('ATTENDANCE LOGS', style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w700,
-                            )),
-                            SizedBox(height: screenHeight * 0.01),
-                            StreamBuilder<int>(
-                              stream: _getCount('attendancecollection'),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return Text('${snapshot.data}', style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.w700,
-                                  ));
-                                } else {
-                                  return const Text('0', style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.w700,
-                                  ));
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  child: DashboardCard(
+                    icon: Icons.file_copy,
+                    label: 'ATTENDANCE LOGS',
+                    stream: _getCount('attendancecollection'),
                   ),
                 ),
                 SizedBox(width: screenWidth * 0.01),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Container(
-                      height: screenHeight * 0.2,
-                      decoration: BoxDecoration(
-                        color: ColorUtils.primaryColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.group, color: Colors.white, size: 50),
-                            SizedBox(height: screenHeight * 0.01),
-                            const Text('OFFICERS', style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w700,
-                            )),
-                            SizedBox(height: screenHeight * 0.01),
-                            StreamBuilder<int>(
-                              stream: _getOfficerCount(),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return Text('${snapshot.data}', style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.w700,
-                                  ));
-                                } else {
-                                  return const Text('0', style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.w700,
-                                  ));
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  child: DashboardCard(
+                    icon: Icons.group,
+                    label: 'OFFICERS',
+                    stream: _getOfficerCount(),
                   ),
                 ),
                 SizedBox(width: screenWidth * 0.01),
