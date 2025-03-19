@@ -5,6 +5,7 @@ import 'package:kapatidsync/src/config/ColorUtils.dart';
 import 'package:provider/provider.dart';
 
 import '../config/ImageUtils.dart';
+import '../widget/CustomText.dart';
 
 class SplashUI extends StatefulWidget {
   @override
@@ -67,15 +68,11 @@ class _SplashUIState extends State<SplashUI> with TickerProviderStateMixin {
                   animation: _animation,
                   builder: (context, child) {
                     String dots = '.' * (_animation.value + 1);
-                    return Text(
-                      'Loading$dots',
-                      style: const TextStyle(
-                        color: Colors.white,
+                    return CustomText(
+                        text:  'Loading$dots',
                         fontSize: 20,
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    );
+                        color: ColorUtils.secondaryColor,
+                      );
                   },
                 ),
               ],

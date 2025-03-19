@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/config/ColorUtils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:kapatidsync/src/widget/CustomText.dart';
 import 'package:kapatidsync/src/widget/DashboardCard.dart';
 
 class DashboardUI extends StatelessWidget {
@@ -23,12 +24,11 @@ class DashboardUI extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorUtils.primaryColor,
-        title: const Text('Dashboard', style: TextStyle(
-          color: Colors.white,
+        title:  const CustomText(
+          text: 'Dashboard',
           fontSize: 20,
-          fontFamily: 'Lato',
-          fontWeight: FontWeight.w700,
-        )),
+          color: ColorUtils.primaryColor,
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -36,12 +36,12 @@ class DashboardUI extends StatelessWidget {
             SizedBox(height: screenHeight * 0.02),
             const Padding(
               padding: EdgeInsets.all(20),
-              child: Text('Welcome to KapatidSync', style: TextStyle(
-                color: ColorUtils.primaryColor,
-                fontSize: 20,
-                fontFamily: 'Lato',
-                fontWeight: FontWeight.w700,
-              )),
+              child:
+                  CustomText(
+                      text: 'Welcome to KapatidSync',
+                    fontSize: 20,
+                    color: ColorUtils.primaryColor,
+                  ),
             ),
             SizedBox(height: screenHeight * 0.02),
             Row(
