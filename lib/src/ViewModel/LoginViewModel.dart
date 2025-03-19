@@ -53,6 +53,8 @@ class LoginViewModel extends ChangeNotifier {
 
         // If login is successful, navigate based on user role
         Navigator.pushReplacementNamed(context, RouteUtil.userPage);
+        emailController.clear();
+        passwordController.clear();
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
