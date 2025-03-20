@@ -5,11 +5,13 @@ import 'package:kapatidsync/src/config/SessionUtils.dart';
 
 abstract class PasswordRepository {
   Future<void> changePassword(String newPassword);
+  Future<bool> resetPassword(String email);
 }
 
 class PasswordRepositoryImpl implements PasswordRepository {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
+  // Change password
   @override
   Future<void> changePassword(String newPassword) async {
     try {
@@ -35,6 +37,18 @@ class PasswordRepositoryImpl implements PasswordRepository {
       }
     } catch (e) {
       Fluttertoast.showToast(msg: e.toString(), backgroundColor: Colors.red);
+    }
+  }
+
+  // Reset password
+  @override
+  Future<bool>  resetPassword(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      return true;
+    } catch (e) {
+      Fluttertoast.showToast(msg: e.toString(), backgroundColor: Colors.red);
+      return false;
     }
   }
 }

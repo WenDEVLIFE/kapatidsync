@@ -19,7 +19,7 @@ class CustomPasswordTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
+      padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02 , horizontal: screenHeight * 0.02 ),
      child: TextField(
        controller:controller,
        style: const TextStyle(color: Colors.white),

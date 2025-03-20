@@ -6,6 +6,7 @@ import 'package:kapatidsync/src/widget/CustomText.dart';
 import 'package:provider/provider.dart';
 
 import '../config/ColorUtils.dart';
+import '../config/Route.dart';
 import '../widget/CustomElevatedButton.dart';
 import '../widget/CustomTextField.dart';
 
@@ -21,43 +22,61 @@ class LoginUi extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: ColorUtils.primaryColor,
-      body: Center(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const CustomText(fontSize: 30,
-                  text: 'Login',
-                  color: ColorUtils.secondaryColor
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const CustomText(
+                    fontSize: 30,
+                    text: 'Login',
+                    color: ColorUtils.secondaryColor,
+                  ),
+                  SizedBox(height: screenHeight * 0.02),
+                  CustomTextField(
+                    controller: viewModel.emailController,
+                    screenHeight: screenHeight,
+                    hintText: 'Email',
+                    fontSize: 20,
+                    keyboardType: TextInputType.text,
+                  ),
+                  SizedBox(height: screenHeight * 0.02),
+                  CustomPasswordTextField(
+                    screenHeight: screenHeight,
+                    hintText: 'Password',
+                    controller: viewModel.passwordController,
+                    isPasswordVisible: viewModel.isObscureText,
+                    togglePasswordVisibility: viewModel.toggleObscureText,
+                  ),
+                  SizedBox(height: screenHeight * 0.02),
+                  CustomElevatedButton(
+                    screenWidth: screenWidth,
+                    screenHeight: screenHeight,
+                    onPressed: () {
+                      viewModel.LoginNow(context);
+                    },
+                    text: 'Login',
+                  ),
+                ],
               ),
-              SizedBox(height: screenHeight * 0.02),
-              CustomTextField(
-                  controller: viewModel.emailController,
-                  screenHeight: screenHeight,
-                  hintText: 'Purok Number',
-                  fontSize: 20,
-                  keyboardType: TextInputType.text
-              ),
-              SizedBox(height: screenHeight * 0.02),
-              CustomPasswordTextField(screenHeight: screenHeight,
-                  hintText: 'Password',
-                  controller: viewModel.passwordController,
-                  isPasswordVisible: viewModel.isObscureText,
-                  togglePasswordVisibility: viewModel.toggleObscureText,
-              ),
-              SizedBox(height: screenHeight * 0.02),
-              CustomElevatedButton(
-                screenWidth: screenWidth,
-                screenHeight: screenHeight,
-                onPressed: () {
-                  viewModel.LoginNow(context);
-                },
-                text: 'Login',
-              ),
-            ],
+            ),
           ),
-
-        )
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, RouteUtil.forgotPassword);
+              },
+              child: const CustomText(
+                text: 'Forgot Password',
+                fontSize: 20,
+                color: ColorUtils.secondaryColor,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

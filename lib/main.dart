@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kapatidsync/src/ViewModel/AttendanceViewModel.dart';
 import 'package:kapatidsync/src/ViewModel/ChangePasswordViewModel.dart';
+import 'package:kapatidsync/src/ViewModel/ForgotPasswordViewModel.dart';
 import 'package:kapatidsync/src/ViewModel/KidViewModel.dart';
 import 'package:kapatidsync/src/ViewModel/LoginViewModel.dart';
 import 'package:kapatidsync/src/ViewModel/MenuViewModel.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => KidViewModel()),
         ChangeNotifierProvider(create: (context) => AttendanceViewModel()),
         ChangeNotifierProvider(create: (context) => ChangePasswordViewModel()),
+        ChangeNotifierProvider(create: (context) => ForgotPasswordViewModel()),
       ],
       child: MaterialApp(
         key: GlobalKey(),
