@@ -47,7 +47,7 @@ class ForgotUi extends StatelessWidget {
                   onPressed: () {
                     viewModel.requestResetPassword(context);
                   },
-                  text: 'Login',
+                  text: 'Forgot Password',
                 ),
               ],
             ),

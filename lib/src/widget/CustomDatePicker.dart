@@ -16,7 +16,7 @@ class CustomDatePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: screenWidth * 0.8,
+      width: screenWidth * 0.6,
       child: TextField(
         controller: controller,
         readOnly: true,
