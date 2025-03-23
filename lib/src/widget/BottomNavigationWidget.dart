@@ -21,6 +21,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   int _selectedIndex = 0;
   SessionUtils sessionUtils = SessionUtils();
   late Future<String> roleFuture;
+  late List<Widget> _widgetOptions = [];
 
   @override
   void initState() {
@@ -33,12 +34,22 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     return userdata!['role'];
   }
 
-  final List<Widget> _widgetOptions = <Widget>[
-    const DashboardUI(),
-    const KidUI(),
-    UserUI(),
-    const AttendanceLogsUI(),
-  ];
+  Future<void> loadWidgets(String role) async {
+    if (role == 'Admin') {
+      _widgetOptions = <Widget>[
+        const DashboardUI(),
+        const KidUI(),
+        UserUI(),
+        const AttendanceLogsUI(),
+      ];
+    } else {
+      _widgetOptions = <Widget>[
+        const DashboardUI(),
+        const KidUI(),
+        const AttendanceLogsUI(),
+      ];
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -64,6 +75,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
           var role = snapshot.data!;
+          loadWidgets(role);
           return Scaffold(
             drawer: DrawerWidget(onItemSelected: _onMenuItemSelected),
             body: Center(

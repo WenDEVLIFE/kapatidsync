@@ -27,7 +27,7 @@ class DashboardUI extends StatelessWidget {
         title:  const CustomText(
           text: 'Dashboard',
           fontSize: 20,
-          color: ColorUtils.primaryColor,
+          color: ColorUtils.secondaryColor,
         ),
       ),
       body: SingleChildScrollView(
